@@ -1,12 +1,9 @@
-import './Navigation.css';
+// import { useState } from 'react';
+import AuthorizedNavigation from '../AuthorizedNavigation/AuthorizedNavigation.js';
+import LandingNavigation from '../LandingNavigation/LandingNavigation.js';
 
-function Navigation() {
-  return (
-    <div className="nav">
-      <button type="button" className="header__register-button">Регистрация</button>
-      <button type="button" className="header__login-button">Войти</button>
-    </div>
-  );
+function Navigation( { isLoggedIn, onSignedUp } ) {
+  return !isLoggedIn ?  <LandingNavigation onSignedUp={onSignedUp}/> : <AuthorizedNavigation />;
 }
 
 export default Navigation;

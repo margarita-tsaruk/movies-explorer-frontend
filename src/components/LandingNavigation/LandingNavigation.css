@@ -1,10 +1,10 @@
-.nav {
+.nav__auth {
   display: flex;
   align-items: center;
   gap: 30px;
 }
 
-.header__register-button {
+.nav__auth_register {
   border: none;
   background-color: transparent;
   color: #FFFFFF;
@@ -12,9 +12,10 @@
   line-height: 16px;
   text-align: right;
   padding: 0;
+  text-decoration: none;
 }
 
-.header__login-button {
+.nav__auth_login {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -28,4 +29,5 @@
   line-height: 16px;
   text-align: right;
   padding: 0;
+  text-decoration: none;
 }

@@ -3,4 +3,11 @@
   justify-content: space-between;
   padding: 18px 70px;
   background-color: #5C5C5C;
+  margin: 0 auto;
+}
+
+.header_background_change {
+  background-color: #fff;
+  justify-content: space-between;
+  padding: 21px 70px;
 }
