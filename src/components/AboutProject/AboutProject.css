@@ -1,0 +1,90 @@
+.diploma-project {
+  color: #000;
+  padding: 110px 70px;
+}
+
+.diploma-project__heading-container {
+  border-bottom: 1px solid rgba(84, 84, 84, .7);
+}
+
+.diploma-project__heading {
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 27px;
+  letter-spacing: -0.04em;
+  margin: 0;
+  padding-bottom: 23px;
+}
+
+.diploma-project__info {
+  display: flex;
+  padding: 70px 0 110px;
+  margin: 0;
+  list-style: none;
+  max-width: 1140px;
+}
+
+.diploma-project__info-title {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.04em;
+  margin: 0;
+  padding-bottom: 26px;
+}
+
+.diploma-project__info-subtitle{
+  margin: 0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.diploma-project__time-chart{
+  display: flex;
+}
+
+.diploma-project__time-chart_first-line{
+  margin: 0;
+  width: 228px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.diploma-project__time-chart_first-line_time-data{
+  background: #2BE080;
+  margin: 0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  padding: 9px;
+}
+
+.diploma-project__time-chart_second-line{
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.diploma-project__time-chart_second-line_time-data {
+  background: #F2F2F2;
+  margin: 0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  padding: 9px;
+}
+
+.diploma-project__time-chart_info-data{
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #A0A0A0;
+  margin: 0;
+}
