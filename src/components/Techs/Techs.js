@@ -1,12 +1,11 @@
 import './Techs.css';
+import Heading from '../Heading/Heading'
 
 function Techs() {
 
   return (
    <section className="technologies">
-      <div className="technologies__heading-container">
-        <h2 className="technologies__heading">Технологии</h2>
-      </div>
+      <Heading heading={"Технологии"} />  
       <h3 className="technologies__title">7 технологий</h3>
       <p className="technologies__subtitle">На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.</p>
       <ul className="technologies__list">
