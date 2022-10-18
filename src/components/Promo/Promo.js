@@ -11,7 +11,11 @@ function Promo() {
         <button 
           type="button" 
           className="promo__button"
-        >Узнать больше</button>
+        >
+          <a className="promo__button_link" href="#about-project">
+            Узнать больше
+          </a>
+        </button>
       </div>
       <img className="promo__logo" src={promoLogo} alt="Промо-лого" />
     </section>

@@ -33,6 +33,13 @@
   color: #000;
   display: flex;
   justify-content: space-between;
+  transition-property: opacity;
+  transition-duration: .2s;
+  transition-timing-function: linear;
+}
+    
+.portfolio__list_link:hover {
+  opacity: .7;
 }
 
 .portfolio__list_icon {

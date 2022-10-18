@@ -52,5 +52,18 @@
   margin-top: 146px;
   padding: 10px 19px;
   cursor: pointer;
-  color: #FFFFFF;
+  color: #fff;
+  transition-property: opacity;
+  transition-duration: .2s;
+  transition-timing-function: linear;
 }
+    
+.promo__button:hover {
+  opacity: .7;
+}
+
+.promo__button_link {
+  text-decoration: none;
+  color: #fff;
+}
+

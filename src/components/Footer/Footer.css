@@ -48,4 +48,11 @@
   font-size: 13px;
   line-height: 16px;
   text-align: right;
+  transition-property: opacity;
+  transition-duration: .2s;
+  transition-timing-function: linear;
+}
+
+.footer__links_link:hover {
+  opacity: .7;
 }

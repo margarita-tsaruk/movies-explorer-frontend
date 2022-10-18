@@ -13,7 +13,15 @@
   text-align: right;
   padding: 0;
   text-decoration: none;
+  transition-property: opacity;
+  transition-duration: .2s;
+  transition-timing-function: linear;
 }
+    
+.nav__auth_register:hover {
+  opacity: .7;
+}
+
 
 .nav__auth_login {
   display: flex;
