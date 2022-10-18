@@ -4,15 +4,30 @@ import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import Movies from '../Movies/Movies';
+// import api from '../../utils/api';
+import { movieCards } from '../../utils/movieCards';
 
 import './App.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
+  // const [movieCards, setMovieCards] = useState([]);
   
   function handleAuthorization() {
     setIsLoggedIn(true)
   }
+
+  // useEffect(() => {
+  //   if(isLoggedIn) {
+  //     api.MovieCards()
+  //       .then((cardsData) => {
+  //         setMovieCards(cardsData);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       })
+  //   }
+  // }, [isLoggedIn])
 
   return (
     <div className="page">
@@ -22,7 +37,9 @@ function App() {
           <Main />
         </Route>
         <Route path="/movies">
-          <Movies />
+          <Movies 
+            movieCards={movieCards}
+          />
         </Route>
       </Switch>
       <Footer />

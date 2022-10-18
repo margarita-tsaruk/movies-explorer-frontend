@@ -12,7 +12,7 @@ function Promo() {
           type="button" 
           className="promo__button"
         >
-          <a className="promo__button_link" href="#about-project">
+          <a className="promo__button_link" href="#about-me">
             Узнать больше
           </a>
         </button>

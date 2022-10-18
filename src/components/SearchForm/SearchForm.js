@@ -1,6 +1,5 @@
-
-import './SearchForm.css';
 import { useState } from 'react';
+import './SearchForm.css';
 
 function SearchForm() {
   const [isChecked, setIsChecked] = useState(false);
@@ -36,7 +35,10 @@ function SearchForm() {
               value={isChecked}
               onChange={handleCheck}
             />
-              <span className={ !isChecked ? "search__form__checkbox_on" : "search__form__checkbox_off" }/>
+              <span className={ 
+                !isChecked 
+                ? "search__form__checkbox search__form__checkbox_on" 
+                : "search__form__checkbox search__form__checkbox_off" }/>
           </label>
           <p className="search__form__info">Короткометражки</p>
         </div>
