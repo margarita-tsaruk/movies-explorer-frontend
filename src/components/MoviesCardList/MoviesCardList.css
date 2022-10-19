@@ -10,6 +10,7 @@
   column-gap: 24px;
   row-gap: 30px;
   padding: 70px 0 30px;
+  list-style: none;
 }
 
 .movies-cards__containter__button {
