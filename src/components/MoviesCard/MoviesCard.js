@@ -4,7 +4,7 @@ import './MoviesCard.css';
 
 function MoviesCard( { movieCard } ) {
   const [isSaved, setIsSaved] = useState(false);
-  const location = useLocation();
+  const { pathname } = useLocation();
 
   function getDuration(mins) {
     let hours = Math.trunc(mins/60);
@@ -26,7 +26,7 @@ function MoviesCard( { movieCard } ) {
       <div className="movie-card__info-container">
         <h3 className="movie-card__title">{`${movieCard.nameRu}`}</h3>
         <p className="movie-card__subtitle">{getDuration(movieCard.duration)}</p>
-        { location === "/saved-moves"
+        { pathname === "/saved-movies"
           ? (
             <button
               type="button"
@@ -37,8 +37,8 @@ function MoviesCard( { movieCard } ) {
             <button
               type="button"
               className={ isSaved
-                ? "movie-card__button movie-card__button_inactive"
-                : "movie-card__button movie-card__button_active"
+                ? "movie-card__button movie-card__button_active"
+                : "movie-card__button movie-card__button_inactive"
               }
               onClick={handleSaveMovies}
             /> 

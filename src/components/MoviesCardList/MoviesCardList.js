@@ -11,6 +11,11 @@ function MoviesCardList( { movieCards } ) {
       <ul className="movies-cards__container">
         {cardsElements}
       </ul>
+      <div className="movies-cards__containter__button">
+        <button className="movies-cards__button" type="button">
+          Ещё
+        </button>
+      </div>
     </section>
   )
 }

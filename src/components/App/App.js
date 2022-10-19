@@ -4,6 +4,7 @@ import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import Movies from '../Movies/Movies';
+import SavedMovies from '../SavedMovies/SavedMovies';
 // import api from '../../utils/api';
 import { movieCards } from '../../utils/movieCards';
 
@@ -38,6 +39,11 @@ function App() {
         </Route>
         <Route path="/movies">
           <Movies 
+            movieCards={movieCards}
+          />
+        </Route>
+        <Route path="/saved-movies">
+          <SavedMovies 
             movieCards={movieCards}
           />
         </Route>

@@ -1,9 +1,9 @@
 // import { useState } from 'react';
 import AuthorizedNavigation from '../AuthorizedNavigation/AuthorizedNavigation.js';
-import LandingNavigation from '../LandingNavigation/LandingNavigation.js';
+import NavTab from '../NavTab/NavTab.js';
 
 function Navigation( { isLoggedIn, onSignedUp } ) {
-  return !isLoggedIn ?  <LandingNavigation onSignedUp={onSignedUp}/> : <AuthorizedNavigation />;
+  return !isLoggedIn ?  <NavTab onSignedUp={onSignedUp}/> : <AuthorizedNavigation />;
 }
 
 export default Navigation;

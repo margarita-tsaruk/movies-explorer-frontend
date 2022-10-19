@@ -1,10 +1,10 @@
-.nav__container{
+.nav__container {
   display: flex;
   gap: 16px;
   align-items: center;
 }
 
-.nav__movies{
+.nav__movies {
   text-decoration: none;
   font-weight: 400;
   font-size: 13px;
@@ -13,13 +13,8 @@
   color: #000;
 }
 
-.nav__saved-movies{
-  text-decoration: none;
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 18px;
-  text-align: right;
-  color: #000;  
+.nav__movies_active {
+  font-weight: 500;
 }
 
 .nav__profile {
@@ -49,6 +44,6 @@
   border-radius: 50px;
 }
 
-.nav__menu-button{
+.nav__menu-button {
   display: none;
 }
