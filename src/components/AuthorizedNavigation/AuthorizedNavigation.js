@@ -26,7 +26,7 @@ function AuthorizedNavigation(  ) {
           </Link>
         </nav>
           <Link className="nav__profile" to="/profile">
-            Аккаунт
+            <p className="nav__account">Аккаунт</p>
             <div className="nav__icon"></div>
           </Link>
           <button className="nav__menu-button" onClick={showMenu}></button>
