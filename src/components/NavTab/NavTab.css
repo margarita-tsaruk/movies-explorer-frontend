@@ -8,6 +8,7 @@
   border: none;
   background-color: transparent;
   color: #FFFFFF;
+  font-weight: 500;
   font-size: 12px;
   line-height: 16px;
   text-align: right;
@@ -17,7 +18,7 @@
   transition-duration: .2s;
   transition-timing-function: linear;
 }
-    
+
 .nav__auth_register:hover {
   opacity: .7;
 }
@@ -33,6 +34,7 @@
   height: 32px;
   background-color: #2BE080;
   color: #000;
+  font-weight: 500;
   font-size: 12px;
   line-height: 16px;
   text-align: right;

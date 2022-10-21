@@ -20,18 +20,18 @@
   padding-bottom: 26px;
 }
 
-.about-project__info-subtitle{
+.about-project__info-subtitle {
   margin: 0;
   font-weight: 400;
   font-size: 14px;
   line-height: 20px;
 }
 
-.about-project__time-chart{
+.about-project__time-chart {
   display: flex;
 }
 
-.about-project__time-chart_first-line{
+.about-project__time-chart_first-line {
   margin: 0;
   width: 228px;
   display: flex;
@@ -39,7 +39,7 @@
   gap: 14px;
 }
 
-.about-project__time-chart_first-line_time-data{
+.about-project__time-chart_first-line_time-data {
   background: #2BE080;
   margin: 0;
   font-weight: 400;
@@ -49,7 +49,7 @@
   padding: 9px;
 }
 
-.about-project__time-chart_second-line{
+.about-project__time-chart_second-line {
   margin: 0;
   width: 100%;
   display: flex;
@@ -67,7 +67,7 @@
   padding: 9px;
 }
 
-.about-project__time-chart_info-data{
+.about-project__time-chart_info-data {
   font-weight: 500;
   font-size: 14px;
   line-height: 17px;

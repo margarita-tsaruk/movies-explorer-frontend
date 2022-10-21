@@ -17,7 +17,7 @@
   padding-bottom: 23px;
 }
 
-.technologies__title{
+.technologies__title {
   margin: 0 auto;
   font-weight: 400;
   font-size: 50px;
@@ -27,7 +27,7 @@
   padding-top: 90px;
 }
 
-.technologies__subtitle{
+.technologies__subtitle {
   margin: 0 auto;
   font-weight: 400;
   font-size: 14px;
@@ -38,7 +38,7 @@
   padding-top: 26px;
 }
 
-.technologies__list{
+.technologies__list {
   list-style: none;
   padding-top: 100px;
   margin: 0 auto;
@@ -47,7 +47,7 @@
   gap: 10px;
 }
 
-.technologies__list__item{
+.technologies__list__item {
   display: flex;
   justify-content: center;
   align-items: center;

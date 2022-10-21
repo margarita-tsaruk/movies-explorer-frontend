@@ -17,9 +17,8 @@ function Profile( ) {
     <section className="profile">
       <h3 className="profile__heading">Привет,{ currentUser.name }  !</h3>
       <form  className="profile__form">
-        <field className="profile__form__field">
-          <label for="name-input" className="profile__label">
-            <p className="profile__label__name">Имя</p>
+        <fieldset className="profile__form__field">
+          <label for="name-input" className="profile__label">Имя
             <input
               id="name-input"
               type="text"
@@ -34,11 +33,10 @@ function Profile( ) {
               disabled = { !isEditedOn }
             />
             <span className="profile__error profile__error_top" id="input-name-error">
-              {!isValid && errors.name}
+              { !isValid && errors.name }
             </span>
           </label>
-          <label for="email-input" className="profile__label">
-            <p className="profile__label__name">E-mail</p>
+          <label for="email-input" className="profile__label">E-mail
             <input
               id="email-input"
               type="email"
@@ -49,12 +47,12 @@ function Profile( ) {
               value={ values.email || '' }
               onChange={handleChange}
               disabled = { !isEditedOn }
-             />
+            />
             <span className="profile__error profile__error_bottom" id="input-email-error">
               { !isValid && errors.email }
             </span>
           </label>
-        </field>
+        </fieldset>
         { !isEditedOn 
           ? (
             <><button type="submit" className="profile__edit-button" onClick={ handleEditClick }>Редактировать </button><Link className="profile__sign-out-link" to="/"> Выйти из аккаунта</Link></>
