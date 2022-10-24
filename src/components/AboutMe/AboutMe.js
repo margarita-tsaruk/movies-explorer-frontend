@@ -16,20 +16,17 @@ function AboutMe(  ) {
           IT сфера для меня невероятно увлекательна, плюс всегда можно работать удаленно.
           За время учебы смогла реализовать несколько проектов.
         </p>
-          
-        <nav>
-          <ul className="about-me__social-links">
-            <li className="about-me__social-links_item">
-              <a className="about-me__social-links_link" href="https://github.com/margarita-tsaruk" target={'_blank'} rel="noreferrer">Github</a>
-            </li>
-            <li className="about-me__social-links_item">
-              <a className="about-me__social-links_link" href="https://career.habr.com/margarita-tsaruk" target={'_blank'} rel="noreferrer">Хабр Карьера</a>
-            </li>
-            <li className="about-me__social-links_item">
-              <a className="about-me__social-links_link" href="https://t.me/yamargaritats" target={'_blank'} rel="noreferrer">Telegram</a>
-            </li>
-          </ul>
-        </nav>
+        <ul className="about-me__social-links">
+          <li className="about-me__social-links__item">
+            <a className="about-me__social-links__link" href="https://github.com/margarita-tsaruk" target={'_blank'} rel="noreferrer">Github</a>
+          </li>
+          <li className="about-me__social-links__item">
+            <a className="about-me__social-links__link" href="https://career.habr.com/margarita-tsaruk" target={'_blank'} rel="noreferrer">Хабр Карьера</a>
+          </li>
+          <li className="about-me__social-links__item">
+            <a className="about-me__social-links__link" href="https://t.me/yamargaritats" target={'_blank'} rel="noreferrer">Telegram</a>
+          </li>
+        </ul>
         <img className="about-me__photo" src={studentImage} alt="Фото Маргариты" /> 
       </div>
     </section>

@@ -1,14 +1,10 @@
-.technologies {
+.techs {
   color: #000;
   padding: 100px 70px;
   background-color: #F5F5F5;
 }
 
-.technologies__heading-container {
-  border-bottom: 1px solid #000;
-}
-
-.technologies__heading {
+.techs__heading {
   font-weight: 400;
   font-size: 22px;
   line-height: 27px;
@@ -17,7 +13,7 @@
   padding-bottom: 23px;
 }
 
-.technologies__title {
+.techs__title {
   margin: 0 auto;
   font-weight: 400;
   font-size: 50px;
@@ -27,7 +23,7 @@
   padding-top: 90px;
 }
 
-.technologies__subtitle {
+.techs__subtitle {
   margin: 0 auto;
   font-weight: 400;
   font-size: 14px;
@@ -38,7 +34,7 @@
   padding-top: 26px;
 }
 
-.technologies__list {
+.techs__list {
   list-style: none;
   padding-top: 100px;
   margin: 0 auto;
@@ -47,7 +43,7 @@
   gap: 10px;
 }
 
-.technologies__list__item {
+.techs__list__item {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -60,4 +56,37 @@
   font-size: 14px;
   line-height: 17px;
   letter-spacing: -0.04em;
+}
+
+@media all and (min-width: 720px) and (max-width: 1024px) {
+  .techs {
+    padding: 90px 50px;
+  }
+}
+
+@media all and (min-width: 720px) and (max-width: 1024px) {
+  .techs__title {
+    padding-top: 80px;
+  }
+}
+
+@media all and (min-width: 720px) and (max-width: 1024px) {
+  .techs__subtitle {
+    padding-top: 22px;
+  }
+}
+
+@media all and (min-width: 720px) and (max-width: 1024px) {
+  .techs__list {
+    padding-top: 83px;
+  }
+}
+
+@media all and (min-width: 720px) and (max-width: 1024px) {
+  .techs__list__item {
+    width: 84px;
+    height: 57px;
+    font-size: 12px;
+    line-height: 15px;
+  }
 }

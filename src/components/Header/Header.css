@@ -11,3 +11,9 @@
   justify-content: space-between;
   padding-top: 21px 70px;
 }
+
+@media all and (min-width: 720px) and (max-width: 1024px) {
+  .header {
+    padding: 18px 30px;
+  }
+}

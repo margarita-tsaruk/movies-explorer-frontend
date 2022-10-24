@@ -42,7 +42,7 @@ function App() {
       <div className="page">
       { pathname === "/" || pathname === "/movies" || pathname === "/saved-movies" || pathname === "/profile"
           ? (
-            <Header isLoggedIn={isLoggedIn} onSignedUp={handleAuthorization}/>
+            <Header isLoggedIn={ isLoggedIn } onSignedUp={ handleAuthorization }/>
           ) : (
             " "
           )
@@ -53,12 +53,12 @@ function App() {
           </Route>
           <Route path="/movies">
             <Movies 
-              movieCards={movieCards}
+              movieCards={ movieCards }
             />
           </Route>
           <Route path="/saved-movies">
             <SavedMovies 
-              movieCards={movieCards}
+              movieCards={ movieCards }
             />
           </Route>
           <Route path="/profile">

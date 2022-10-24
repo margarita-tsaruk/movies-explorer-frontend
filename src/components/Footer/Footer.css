@@ -1,6 +1,6 @@
 .footer {
   background: #FAFAFA;
-  padding: 75px 70px 0;
+  padding: 79px 70px 0;
 }
 
 .footer__info {
@@ -54,4 +54,17 @@
 
 .footer__links_link:hover {
   opacity: .7;
+}
+
+@media all and (min-width: 720px) and (max-width: 1024px) {
+  .footer {
+    background: #fff;
+    padding: 79px 30px 20px;
+  }
+}
+
+@media all and (min-width: 720px) and (max-width: 1024px) {
+  .footer__container {
+    padding: 20px 0 0;
+  }
 }
