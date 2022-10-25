@@ -8,25 +8,27 @@ function AboutMe(  ) {
     <section className="about-me">
       <Heading heading={"Студент"} />
       <div className="about-me__info-container">
-        <h3 className="about-me__name">Маргарита Царук</h3>
-        <h4 className="about-me__job">Веб-разработчик, 34 года</h4>
-        <p className="about-me__description">
-          Я из Михайловска, но чувствую себя человеком мира. Люблю путешествовать и уже побывала в 17 странах. 
-          Меняю HR на IT - мне очень нравится писать код, полностью погружаться в новые знания.
-          IT сфера для меня невероятно увлекательна, плюс всегда можно работать удаленно.
-          За время учебы смогла реализовать несколько проектов.
-        </p>
-        <ul className="about-me__social-links">
-          <li className="about-me__social-links__item">
-            <a className="about-me__social-links__link" href="https://github.com/margarita-tsaruk" target={'_blank'} rel="noreferrer">Github</a>
-          </li>
-          <li className="about-me__social-links__item">
-            <a className="about-me__social-links__link" href="https://career.habr.com/margarita-tsaruk" target={'_blank'} rel="noreferrer">Хабр Карьера</a>
-          </li>
-          <li className="about-me__social-links__item">
-            <a className="about-me__social-links__link" href="https://t.me/yamargaritats" target={'_blank'} rel="noreferrer">Telegram</a>
-          </li>
-        </ul>
+        <div className="about-me__info">
+          <h3 className="about-me__name">Маргарита Царук</h3>
+          <h4 className="about-me__job">Веб-разработчик, 34 года</h4>
+          <p className="about-me__description">
+              Я из Михайловска, но чувствую себя человеком мира. Люблю путешествовать и уже побывала в 17 странах. 
+              Меняю HR на IT - мне очень нравится писать код, полностью погружаться в новые знания.
+              IT сфера для меня невероятно увлекательна, плюс всегда можно работать удаленно.
+              За время учебы смогла реализовать несколько проектов.
+          </p>
+          <ul className="about-me__social-links">
+            <li className="about-me__social-links__item">
+              <a className="about-me__social-links__link" href="https://github.com/margarita-tsaruk" target={'_blank'} rel="noreferrer">Github</a>
+            </li>
+            <li className="about-me__social-links__item">
+              <a className="about-me__social-links__link" href="https://career.habr.com/margarita-tsaruk" target={'_blank'} rel="noreferrer">Хабр Карьера</a>
+            </li>
+            <li className="about-me__social-links__item">
+              <a className="about-me__social-links__link" href="https://t.me/yamargaritats" target={'_blank'} rel="noreferrer">Telegram</a>
+            </li>
+          </ul>
+        </div>
         <img className="about-me__photo" src={studentImage} alt="Фото Маргариты" /> 
       </div>
     </section>

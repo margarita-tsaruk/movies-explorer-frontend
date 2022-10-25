@@ -7,10 +7,10 @@ function NavTab({ onSignedUp }) {
     <Switch>
       <Route path="/">
         <nav className="nav__auth">
-          <Link className="nav__auth_register" to="/signup" onClick={onSignedUp}>
+          <Link className="nav__auth__register" to="/signup" onClick={onSignedUp}>
             Регистрация
           </Link>
-          <Link className="nav__auth_login" to="/signin">
+          <Link className="nav__auth__login" to="/signin">
             Войти
           </Link>
         </nav>

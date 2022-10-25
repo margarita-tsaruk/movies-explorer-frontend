@@ -4,7 +4,7 @@
   gap: 30px;
 }
 
-.nav__auth_register {
+.nav__auth__register {
   border: none;
   background-color: transparent;
   color: #FFFFFF;
@@ -19,12 +19,12 @@
   transition-timing-function: linear;
 }
 
-.nav__auth_register:hover {
+.nav__auth__register:hover {
   opacity: .7;
 }
 
 
-.nav__auth_login {
+.nav__auth__login {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,3 +41,24 @@
   padding: 0;
   text-decoration: none;
 }
+
+@media all and (max-width: 719px) {
+  .nav__auth {
+    gap: 14px;
+  }
+}
+
+@media all and (max-width: 719px) {
+  .nav__auth__register {
+    font-size: 10px;
+  }
+}
+
+@media all and (max-width: 719px) {
+  .nav__auth__login {
+    font-size: 10px;
+    width: 54px;
+    height: 26px;
+  }
+}
+

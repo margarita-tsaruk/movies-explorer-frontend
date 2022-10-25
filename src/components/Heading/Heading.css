@@ -11,3 +11,11 @@
   border-bottom: 1px solid #000;
   margin: 0;
 }
+
+@media all and (max-width: 719px) {
+  .heading {
+    padding-bottom: 28px;
+    font-size: 18px;
+    line-height: 22px;
+  }
+}

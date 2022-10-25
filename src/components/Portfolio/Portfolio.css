@@ -23,7 +23,6 @@
 
 .portfolio__list__item:last-of-type {
   border-bottom: 0;
-  height: 92px;
 }
 
 .portfolio__list__link {
@@ -57,22 +56,42 @@
   .portfolio {
     padding: 90px 50px;
   }
-}
 
-@media all and (min-width: 720px) and (max-width: 1024px) {
   .portfolio__list__link {
     font-size: 28px;
   }
-}
 
-@media all and (min-width: 720px) and (max-width: 1024px) {
   .portfolio__list__icon {
     width: 27px;
   }
 }
 
-@media all and (min-width: 720px) and (max-width: 1024px) {
-  .portfolio__list__item:last-of-type{
-    height: 70px;
+@media all and (max-width: 719px) {
+  .portfolio {
+    padding: 0 14px 70px;
+  }
+
+  .portfolio__title {
+    font-size: 14px;
+  }
+
+  .portfolio__list {
+    padding: 20px 0 0;
+  }
+
+  .portfolio__list__link {
+    font-size: 18px;
+    line-height: 28px;
+    padding: 20px 0 19px;
+  }
+
+  .portfolio__list__icon {
+    width: 27px;
+  }
+
+  .portfolio__list__icon {
+    background: url(../../images//link_icon_small.svg) no-repeat center;
+    width: 18px;
+    height: 28px;
   }
 }

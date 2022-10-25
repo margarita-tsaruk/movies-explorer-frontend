@@ -88,38 +88,77 @@
   .about-project {
     padding: 90px 50px;
   }
-}
 
-@media all and (min-width: 720px) and (max-width: 1024px) {
   .about-project__info-list {
     padding: 70px 0 93px;
     gap: 30px;
   }
-}
 
-@media all and (min-width: 720px) and (max-width: 1024px) {
   .about-project__info-list__title {
     padding-bottom: 23px;
     max-width: 319px;
   }
-}
 
-@media all and (min-width: 720px) and (max-width: 1024px) {
   .about-project__info-list__subtitle {
     max-width: 319px;
     font-size: 12px;
     line-height: 18px;
   }
-}
 
-@media all and (min-width: 720px) and (max-width: 1024px) {
   .about-project__time-chart__first-line {
     width: 140px;
   }
-}
 
-@media all and (min-width: 720px) and (max-width: 1024px) {
   .about-project__time-chart__first-line__time-data {
     max-width: 120px;
+  }
+}
+
+@media all and (max-width: 719px) {
+  .about-project {
+    padding: 70px 18px;
+  }
+
+  .about-project__info-list {
+    flex-direction: column;
+    gap: 56px;
+    padding: 60px 0;
+  }
+
+  .about-project__info-list__title {
+    font-size: 18px;
+    line-height: 22px;
+    padding-bottom: 16px;
+  }
+
+  .about-project__info-list__subtitle {
+    font-size: 11px;
+    line-height: 16px;
+    max-width: 284px;
+  }
+
+  .about-project__time-chart__first-line {
+    width: 100px;
+    gap: 10px;
+  }
+
+  .about-project__time-chart__first-line__time-data {
+    max-width: 80px;
+    font-size: 11px;
+    line-height: 13px;
+  }
+
+  .about-project__time-chart__second-line {
+    gap: 10px;
+  }
+
+  .about-project__time-chart__second-line__time-data {
+    font-size: 11px;
+    line-height: 13px;
+  }
+
+  .about-project__time-chart__data {
+    font-size: 11px;
+    line-height: 13px;
   }
 }
