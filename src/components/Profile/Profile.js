@@ -53,6 +53,7 @@ function Profile( ) {
             </span>
           </label>
         </fieldset>
+        </form> 
         { !isEditedOn 
           ? (
             <><button type="submit" className="profile__edit-button" onClick={ handleEditClick }>Редактировать </button><Link className="profile__sign-out-link" to="/"> Выйти из аккаунта</Link></>
@@ -60,7 +61,6 @@ function Profile( ) {
             <button type="submit" className="profile__save-button" onClick={ handleEditClick }>Сохранить</button>
           )
         }
-      </form>   
     </section>
   );
 }

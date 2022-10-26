@@ -103,3 +103,42 @@
   color: #000;
   margin: 0;
 }
+
+@media all and (min-width: 720px) and (max-width: 1024px) {
+  .search {
+    padding: 0 0 10px;
+  }
+
+  .search__form {
+    padding-bottom: 52px;
+  }
+}
+
+@media all and (max-width: 719px) {
+  .search {
+    padding: 0 4px 10px;
+  }
+  
+  .search__form__container {
+    padding: 6px;
+  }
+
+  .search__form__input {
+    font-size: 16px;
+    line-height: 16px;
+    padding: 0;
+  }
+
+  .search__form__button {
+    padding: 13px 19px;
+  }
+
+  .search__form__container_checkbox {
+    gap: 13px;
+    padding-top: 30px;
+  }
+
+  .search__form__info {
+    font-size: 11px;
+  }
+}

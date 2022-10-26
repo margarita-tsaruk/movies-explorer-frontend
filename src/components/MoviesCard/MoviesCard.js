@@ -24,8 +24,10 @@ function MoviesCard( { movieCard } ) {
   return (
     <li className="movie-card">
       <div className="movie-card__info-container">
-        <h3 className="movie-card__title">{`${movieCard.nameRu}`}</h3>
-        <p className="movie-card__subtitle">{getDuration(movieCard.duration)}</p>
+        <div className="movie-card__info">
+          <h3 className="movie-card__title">{`${movieCard.nameRu}`}</h3>
+          <p className="movie-card__subtitle">{getDuration(movieCard.duration)}</p>
+        </div>
         { pathname === "/saved-movies"
           ? (
             <button
@@ -48,7 +50,7 @@ function MoviesCard( { movieCard } ) {
       
       <img
         className="movie-card__image"
-          src={`https://avatars.mds.yandex.net/i?id=aabb58069748049fd63c0178429ee9ad-4269827-images-thumbs&n=13`}
+          src={`https://avatars.mds.yandex.net/i?id=cd34410e48403eb5a1dc95bf30fcd558-4562233-images-thumbs&n=13`}
           alt={movieCard.nameRu}
       />
     </li>

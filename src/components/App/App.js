@@ -17,7 +17,7 @@ import './App.css';
 
 function App() {
   const { pathname } = useLocation();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [currentUser, setCurrentUser] = useState({});
   // const [movieCards, setMovieCards] = useState([]);
   
