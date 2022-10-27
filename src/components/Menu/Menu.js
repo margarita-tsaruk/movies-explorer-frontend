@@ -18,7 +18,7 @@ function Menu ( { isMenuOpen, onChangeMenu } ) {
               <Link className="menu__nav__link menu__nav__link_saved-movies" to="/saved-movies" onClick={ onChangeMenu }>
                 Сохранённые фильмы
               </Link>
-              <Link className="menu__nav__profile" to="/profile">
+              <Link className="menu__nav__profile" to="/profile" onClick={ onChangeMenu }>
                 <p className="menu__nav__account">Аккаунт</p>
                 <div className="menu__nav__icon"></div>
               </Link>
