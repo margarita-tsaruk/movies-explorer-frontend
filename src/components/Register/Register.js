@@ -28,9 +28,9 @@ function Register( { onSignedUp } ) {
   }
 
   return (
-    <section className="auth">
+    <main className="auth">
       <Link to="/">
-        <img className="form__logo" src={logo} alt="Лого" />
+        <img className="form__logo" src={ logo } alt="Лого" />
       </Link>
       <Form
         name="register"
@@ -77,7 +77,7 @@ function Register( { onSignedUp } ) {
             id="password-input"
             type="password"
             name="password"
-            className={ `form__input ${errors.password && 'form__input_type_invalid'}` }
+            className={ `form__input ${ errors.password && 'form__input_type_invalid' }` }
             placeholder="Пароль"
             minLength="2"
             maxLength="40"
@@ -89,7 +89,7 @@ function Register( { onSignedUp } ) {
           </span>
         </fieldset>
       </Form>
-    </section>
+    </main>
   );
 }
 

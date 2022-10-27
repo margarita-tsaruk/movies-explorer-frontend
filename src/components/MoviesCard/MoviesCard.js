@@ -9,7 +9,7 @@ function MoviesCard( { movieCard } ) {
   function getDuration(mins) {
     let hours = Math.trunc(mins/60);
     let minutes = mins % 60;
-    return `${hours}ч ${minutes}м`;
+    return `${ hours }ч ${ minutes }м`;
   };
 
   function handleSaveMovies() {
@@ -25,15 +25,15 @@ function MoviesCard( { movieCard } ) {
     <li className="movie-card">
       <div className="movie-card__info-container">
         <div className="movie-card__info">
-          <h3 className="movie-card__title">{`${movieCard.nameRu}`}</h3>
-          <p className="movie-card__subtitle">{getDuration(movieCard.duration)}</p>
+          <h3 className="movie-card__title">{ `${ movieCard.nameRu }` }</h3>
+          <p className="movie-card__subtitle">{ getDuration(movieCard.duration) }</p>
         </div>
         { pathname === "/saved-movies"
           ? (
             <button
               type="button"
               className="movie-card__button movie-card__button_delete"
-              onClick={handleDeleteSavedMovies}
+              onClick={ handleDeleteSavedMovies }
              />
           ) : (
             <button
@@ -42,7 +42,7 @@ function MoviesCard( { movieCard } ) {
                 ? "movie-card__button movie-card__button_active"
                 : "movie-card__button movie-card__button_inactive"
               }
-              onClick={handleSaveMovies}
+              onClick={ handleSaveMovies }
             /> 
           )
         }
@@ -50,8 +50,8 @@ function MoviesCard( { movieCard } ) {
       
       <img
         className="movie-card__image"
-          src={`https://avatars.mds.yandex.net/i?id=cd34410e48403eb5a1dc95bf30fcd558-4562233-images-thumbs&n=13`}
-          alt={movieCard.nameRu}
+          src={ `https://avatars.mds.yandex.net/i?id=cd34410e48403eb5a1dc95bf30fcd558-4562233-images-thumbs&n=13` }
+          alt={ movieCard.nameRu }
       />
     </li>
   )

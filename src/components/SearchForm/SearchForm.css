@@ -25,6 +25,12 @@
   width: 90%;
 }
 
+.search__form__input:focus {
+  outline: 0;
+  border-bottom: 1px solid #4285f4;
+  border-radius: 0%;
+} 
+
 .search__form__button {
   background: #2BE080;
   border-radius: 5px;

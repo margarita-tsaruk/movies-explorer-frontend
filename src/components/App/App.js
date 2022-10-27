@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Route, Switch, useLocation } from 'react-router-dom';
+import { Route, Switch, useLocation, useHistory} from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -10,6 +10,7 @@ import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import PageNotFound from '../PageNotFound/PageNotFound';
+import Menu from '../Menu/Menu';
 // import api from '../../utils/api';
 import { movieCards } from '../../utils/movieCards';
 
@@ -17,12 +18,20 @@ import './App.css';
 
 function App() {
   const { pathname } = useLocation();
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const history = useHistory();
   const [currentUser, setCurrentUser] = useState({});
   // const [movieCards, setMovieCards] = useState([]);
   
   function handleAuthorization() {
-    setIsLoggedIn(true)
+    console.log(isLoggedIn);
+    setIsLoggedIn(!isLoggedIn);
+    history.push('/movies');
+  }
+
+  function handleMenuOpen() {
+    setIsMenuOpen(!isMenuOpen);
   }
 
   // useEffect(() => {
@@ -40,16 +49,17 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-      { pathname === "/" || pathname === "/movies" || pathname === "/saved-movies" || pathname === "/profile"
-          ? (
-            <Header isLoggedIn={ isLoggedIn } onSignedUp={ handleAuthorization }/>
-          ) : (
-            " "
-          )
+        { pathname === "/" || pathname === "/movies" || pathname === "/saved-movies" || pathname === "/profile"
+            ? (
+              <Header isLoggedIn={ isLoggedIn } onSignedUp={ handleAuthorization } onChangeMenu={handleMenuOpen} />
+            ) : (
+              " "
+            )
         }
+        <Menu isMenuOpen={ isMenuOpen } onChangeMenu={ handleMenuOpen } />
         <Switch>
           <Route exact path="/">
-            <Main />
+            <Main isLoggedIn={isLoggedIn} />
           </Route>
           <Route path="/movies">
             <Movies 

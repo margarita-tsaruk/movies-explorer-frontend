@@ -28,9 +28,9 @@ function Login( { onSignedUp } ) {
   }
 
   return (
-    <section className="auth">
+    <main className="auth">
       <Link to="/">
-        <img className="form__logo" src={logo} alt="Лого" />
+        <img className="form__logo" src={ logo } alt="Лого" />
       </Link>
       <Form
         name="login"
@@ -47,7 +47,7 @@ function Login( { onSignedUp } ) {
             id="email-input"
             type="email"
             name="email"
-            className={`form__input ${ errors.email && 'form__input_type_invalid'}` }
+            className={`form__input ${ errors.email && 'form__input_type_invalid' }` }
             placeholder="E-mail"
             minLength="2"
             maxLength="40"
@@ -62,7 +62,7 @@ function Login( { onSignedUp } ) {
             id="password-input"
             type="password"
             name="password"
-            className={ `form__input ${errors.password && 'form__input_type_invalid'}` }
+            className={ `form__input ${ errors.password && 'form__input_type_invalid' }` }
             placeholder="Пароль"
             minLength="2"
             maxLength="40"
@@ -74,7 +74,7 @@ function Login( { onSignedUp } ) {
           </span>
         </fieldset>
       </Form>
-    </section>
+    </main>
   );
 }
 

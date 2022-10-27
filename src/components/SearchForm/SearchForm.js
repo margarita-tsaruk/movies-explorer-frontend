@@ -22,8 +22,9 @@ function SearchForm() {
             name="name"
             className="search__form__input"
             placeholder="Фильм"
+            required
           />
-          <button type="submit" className="search__form__button" onClick={handleSubmit}>
+          <button type="submit" className="search__form__button" onClick={ handleSubmit }>
             Поиск
           </button>
         </div>
@@ -32,8 +33,8 @@ function SearchForm() {
             <input
               type="checkbox"
               className="search__form__input_checkbox"
-              value={isChecked}
-              onChange={handleCheck}
+              value={ isChecked }
+              onChange={ handleCheck }
             />
               <span className={ 
                 !isChecked 

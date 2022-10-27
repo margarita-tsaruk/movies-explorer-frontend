@@ -14,7 +14,7 @@ function Profile( ) {
   }
 
   return (
-    <section className="profile">
+    <main className="profile">
       <h3 className="profile__heading">Привет,{ currentUser.name }  !</h3>
       <form  className="profile__form">
         <fieldset className="profile__form__field">
@@ -61,7 +61,7 @@ function Profile( ) {
             <button type="submit" className="profile__save-button" onClick={ handleEditClick }>Сохранить</button>
           )
         }
-    </section>
+    </main>
   );
 }
 

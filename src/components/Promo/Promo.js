@@ -17,7 +17,7 @@ function Promo() {
           </a>
         </button>
       </div>
-      <img className="promo__logo" src={promoLogo} alt="Промо-лого" />
+      <img className="promo__logo" src={ promoLogo } alt="Промо-лого" />
     </section>
   );
 }

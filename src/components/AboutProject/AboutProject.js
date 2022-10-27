@@ -5,7 +5,7 @@ function AboutProject(  ) {
 
   return (
    <section className="about-project" id="about-project">
-    <Heading heading={"О проекте"} />
+    <Heading heading={ "О проекте" } />
     <ul className="about-project__info-list">
       <li className="about-project__info-list__item">
         <h3 className="about-project__info-list__title">Дипломный проект включал 5 этапов</h3>

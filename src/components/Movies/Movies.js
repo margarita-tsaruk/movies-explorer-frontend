@@ -1,20 +1,20 @@
-import React from 'react';
+import { useState } from 'react';
 import './Movies.css';
 import SearchForm from '../SearchForm/SearchForm.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader'
 
 function Movies( { movieCards } ) {
-  const [ isLoading, setIsLoading ] = React.useState(false);
+  const [ isLoading, setIsLoading ] = useState(false);
   
   return (
-    <div className="movies">
+    <main className="movies">
       <SearchForm />
-      {isLoading 
+      { isLoading 
       ?  <Preloader />
-      : <MoviesCardList movieCards={movieCards} />
+      : <MoviesCardList movieCards={ movieCards } />
       }
-    </div>
+    </main>
   );
 }
 

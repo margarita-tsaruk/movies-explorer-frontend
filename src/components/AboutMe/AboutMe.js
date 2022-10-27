@@ -6,7 +6,7 @@ function AboutMe(  ) {
 
   return (
     <section className="about-me">
-      <Heading heading={"Студент"} />
+      <Heading heading={ "Студент" } />
       <div className="about-me__info-container">
         <div className="about-me__info">
           <h3 className="about-me__name">Маргарита Царук</h3>
@@ -29,7 +29,7 @@ function AboutMe(  ) {
             </li>
           </ul>
         </div>
-        <img className="about-me__photo" src={studentImage} alt="Фото Маргариты" /> 
+        <img className="about-me__photo" src={ studentImage } alt="Фото Маргариты" /> 
       </div>
     </section>
   );

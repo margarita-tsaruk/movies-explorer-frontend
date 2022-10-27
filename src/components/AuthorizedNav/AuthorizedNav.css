@@ -81,6 +81,13 @@
   height: 44px;
   border: 0;
   padding: 0;
+  transition-property: opacity;
+  transition-duration: .2s;
+  transition-timing-function: linear;
+}
+
+.nav__menu-button:hover {
+  opacity: .7;
 }
 
 @media all and (min-width: 1025px) {

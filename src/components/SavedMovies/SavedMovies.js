@@ -6,10 +6,10 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 function Movies( { movieCards } ) {
 
   return (
-    <div className="movies">
+    <main className="movies">
       <SearchForm />
-      <MoviesCardList movieCards={movieCards} />
-    </div>
+      <MoviesCardList movieCards={ movieCards } />
+    </main>
   );
 }
 
