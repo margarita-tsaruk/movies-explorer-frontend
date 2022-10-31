@@ -1,0 +1,22 @@
+.auth {
+  display: flex;
+  flex-direction: column;
+  max-width: 396px;
+  margin: 70px auto;
+  color: #000;
+}
+
+@media all and (min-width: 720px) and (max-width: 1024px) {
+  .auth {
+    margin: 232px auto;
+    padding: 0;
+  }
+}
+
+@media all and (max-width: 719px) {
+  .auth {
+    margin: 0;
+    padding: 56px 30px 30px;
+    align-items: center;
+  }
+}

@@ -1,0 +1,150 @@
+.search {
+  padding: 70px 0 10px;
+}
+
+.search__form {
+  padding-bottom: 44px;
+  border-bottom: 1px solid rgba(170, 170, 170, 0.2);
+}
+
+.search__form__container {
+  border: 1.5px solid rgba(170, 170, 170, 0.2);
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.search__form__input {
+  border: none;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 20px;
+  color: #A0A0A0;
+  padding: 10px;
+  width: 90%;
+}
+
+.search__form__input:focus {
+  outline: 0;
+  border-bottom: 1px solid #4285f4;
+  border-radius: 0%;
+} 
+
+.search__form__button {
+  background: #2BE080;
+  border-radius: 5px;
+  margin: 0;
+  color: #fff;
+  border: none;
+  text-align: center;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  padding: 17px 29px;
+  cursor: pointer;
+}
+
+.search__form__container_checkbox {
+  padding-top: 25px;
+  display: flex;
+  gap: 14px;
+}
+
+.search__form__container_label {
+  display: inline-block;
+  cursor: pointer;
+  width: 36px;
+  height: 20px;
+  position: relative;
+}
+
+.search__form__input_checkbox {
+  display: none;
+}
+
+.search__form__checkbox_on {
+  position: absolute;
+  background-color: #2BE080;
+  margin: 0;
+  border-radius: 16px;
+  inset: 0;
+}
+
+.search__form__checkbox_on::before {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background-color: #fff;
+  content: '';
+  border-radius: 50%;
+  right: 2px;
+  bottom: 2px;
+}
+
+.search__form__checkbox_off {
+  position: absolute;
+  background-color: #EBEBEB;
+  margin: 0;
+  border-radius: 16px;
+  transition: 0.6s;
+  inset: 0;
+}
+
+.search__form__checkbox_off::after {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background-color: #F5F5F5;
+  content: '';
+  border-radius: 50%;
+  left: 2px;
+  bottom: 2px;
+}
+
+.search__form__info {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  color: #000;
+  margin: 0;
+}
+
+@media all and (min-width: 720px) and (max-width: 1024px) {
+  .search {
+    padding: 0 0 10px;
+  }
+
+  .search__form {
+    padding-bottom: 52px;
+  }
+}
+
+@media all and (max-width: 719px) {
+  .search {
+    padding: 0 4px 10px;
+  }
+  
+  .search__form__container {
+    padding: 6px;
+  }
+
+  .search__form__input {
+    font-size: 16px;
+    line-height: 16px;
+    padding: 0;
+  }
+
+  .search__form__button {
+    padding: 13px 19px;
+  }
+
+  .search__form__container_checkbox {
+    gap: 13px;
+    padding-top: 30px;
+  }
+
+  .search__form__info {
+    font-size: 11px;
+  }
+}
