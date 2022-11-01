@@ -1,15 +1,18 @@
-import { useState } from 'react';
+import { useForm } from '../../hooks/useForm';
+import { useEffect } from 'react';
 import './SearchForm.css';
 
-function SearchForm() {
-  const [isChecked, setIsChecked] = useState(false);
-  
+function SearchForm( { onSearchMovies, onCheckbox, isChecked, input } ) {
+  const { values, handleChange, resetErrors, setValues } = useForm({});
+
+  useEffect(() => {
+    setValues({ search: input });
+  }, [input, setValues]);
+
   function handleSubmit(e) {
     e.preventDefault();
-  }
-
-  function handleCheck() {
-    setIsChecked(!isChecked);
+    onSearchMovies(values.search, isChecked);
+    resetErrors();
   }
   
   return (
@@ -19,9 +22,11 @@ function SearchForm() {
           <input
             id="search-input"
             type="text"
-            name="name"
+            name="search"
             className="search__form__input"
             placeholder="Фильм"
+            value={ values.search || '' }
+            onChange={ handleChange }
             required
           />
           <button type="submit" className="search__form__button" onClick={ handleSubmit }>
@@ -34,7 +39,7 @@ function SearchForm() {
               type="checkbox"
               className="search__form__input_checkbox"
               value={ isChecked }
-              onChange={ handleCheck }
+              onChange={ onCheckbox }
             />
               <span className={ 
                 !isChecked 

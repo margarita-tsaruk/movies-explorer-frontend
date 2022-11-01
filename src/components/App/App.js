@@ -12,7 +12,7 @@ import Login from '../Login/Login';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import Menu from '../Menu/Menu';
 // import api from '../../utils/api';
-import { movieCards } from '../../utils/movieCards';
+// import { movieCards } from '../../utils/movieCards';
 
 import './App.css';
 
@@ -63,12 +63,12 @@ function App() {
           </Route>
           <Route path="/movies">
             <Movies 
-              movieCards={ movieCards }
+             
             />
           </Route>
           <Route path="/saved-movies">
             <SavedMovies 
-              movieCards={ movieCards }
+            
             />
           </Route>
           <Route path="/profile">
