@@ -8,6 +8,7 @@ import moviesApi from '../../utils/MoviesApi';
 function Movies( ) {
   const [ isLoading, setIsLoading ] = useState(false);
   const [ movieCards, setMovieCards ] = useState(null);
+  const [ filteredMovies, setFilteredMovies ] = useState([]);
   const [ error, setError ] = useState('');
   const [ isChecked, setIsChecked ] = useState(false);
   const [ input, setInput ] = useState('');
@@ -17,6 +18,12 @@ function Movies( ) {
     if (movies) {
       const getMovies = JSON.parse(movies);
       setMovieCards(getMovies);
+    }
+
+    const searchedMovies = localStorage.getItem('searchedMovies');
+    if (searchedMovies) {
+      const getSearchedMovies = JSON.parse(searchedMovies);
+      setMovieCards(getSearchedMovies);
     }
 
     const checkbox = localStorage.getItem('checkbox');
@@ -64,12 +71,18 @@ function Movies( ) {
 
   function handleSearchMovies(inputValueSearch, isChecked) {
     setIsLoading(true);
-    moviesApi.getMovieCards()
+    moviesApi.getMovies()
       .then((movieCards) => {
         const foundMovies = movieCards.filter(data => {
           return data.nameRU.toLowerCase().includes(inputValueSearch.toLowerCase());
         });
 
+        if (foundMovies.length) {
+          localStorage.setItem('searchedMovies', JSON.stringify(foundMovies));
+          setFilteredMovies(foundMovies);
+          localStorage.setItem('inputSearch', inputValueSearch);
+        }
+        
         if(!isChecked) {
           handleCheckboxOn(foundMovies, inputValueSearch, isChecked);
         } else {

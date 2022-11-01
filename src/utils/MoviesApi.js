@@ -14,7 +14,7 @@ class MoviesApi {
   } 
   
   //Объявление публичного метода: отправить запрос серверу - загрузить карточки
-  getMovieCards() {
+  getMovies() {
     return fetch (this.url, {
       method: 'GET',
       headers: this.headers,

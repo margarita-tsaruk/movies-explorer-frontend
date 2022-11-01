@@ -40,6 +40,10 @@
   opacity: .7;
 }
 
+.movies-cards__button_not-visible {
+  display: none;
+}
+
 @media all and (min-width: 720px) and (max-width: 1024px) {
   .movies-cards__container {
     grid-template-columns: repeat(auto-fit, minmax(305px, 1fr));
