@@ -50,7 +50,7 @@ function MoviesCard( { movieCard } ) {
       <a className="movie-card__link" href={ movieCard.trailerLink } target="_blank" rel="noreferrer">
         <img
           className="movie-card__image"
-            src={ `https://api.nomoreparties.co${movieCard.image.url}` }
+            src={ `https://api.nomoreparties.co${ movieCard.image.url }` }
             alt={ movieCard.nameRU }
         />
       </a>

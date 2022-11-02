@@ -13,6 +13,7 @@ function Movies( ) {
   const [ isChecked, setIsChecked ] = useState(false);
   const [ input, setInput ] = useState('');
   
+  
   useEffect(() => {
     const movies = localStorage.getItem('movies');
     if (movies) {
@@ -27,7 +28,7 @@ function Movies( ) {
     }
 
     const checkbox = localStorage.getItem('checkbox');
-    if (checkbox) {
+    if (checkbox === 'true') {
       setIsChecked(true);
     }
 
@@ -102,6 +103,7 @@ function Movies( ) {
       });
   }
 
+
   return (
     <main className="movies">
       <SearchForm 
@@ -115,7 +117,7 @@ function Movies( ) {
         ? ( 
           <Preloader />
         ) : (
-          <MoviesCardList movieCards={ movieCards } />
+          <MoviesCardList movieCards={ movieCards }  />
         )
         ) : (
           <div className="movies__error__container">
