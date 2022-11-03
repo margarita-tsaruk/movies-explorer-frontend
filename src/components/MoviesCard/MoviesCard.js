@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import mainApi from '../../utils/MainApi';
 import './MoviesCard.css';
 
-function MoviesCard( { movieCard } ) {
-  const [isSaved, setIsSaved] = useState(false);
+function MoviesCard( { movieCard, savedMovies, saveMovies } ) {
+  const [ isSaved, setIsSaved ] = useState(false);
   const { pathname } = useLocation();
 
   function getDuration(mins) {
@@ -12,13 +13,25 @@ function MoviesCard( { movieCard } ) {
     return `${ hours }ч ${ minutes }м`;
   };
 
-  function handleSaveMovies() {
-    setIsSaved(!isSaved);
-  }
-  
   function handleDeleteSavedMovies() {
     setIsSaved(!isSaved);
     console.log('yes') ///УБРАТЬ ПОЗЖЕ
+  }
+
+  function handleMovieSave(movie) {
+    console.log(movieCard)
+    setIsSaved(!isSaved);
+    const isMovieSaved = savedMovies.some(i => i.movieId === movieCard.id);
+    mainApi.changeMovieStatus(movieCard._id, isMovieSaved) 
+      .then((newMovie) => {
+        if(newMovie) {
+          saveMovies();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log('Wrong')
+      })
   }
   
   return (
@@ -42,7 +55,7 @@ function MoviesCard( { movieCard } ) {
                 ? "movie-card__button movie-card__button_active"
                 : "movie-card__button movie-card__button_inactive"
               }
-              onClick={ handleSaveMovies }
+              onClick={ handleMovieSave }
             /> 
           )
         }

@@ -12,19 +12,54 @@ class MainApi {
     } 
   } 
   
-  saveMovies() {
+  getSavedMovies() {
     return fetch(`${this.url}/movies`, {
       method: 'GET',
       headers: this.headers,
-      
+      credentials: 'include',
     })
     .then(this._getServerResponse);
+  }
+
+  changeMovieStatus(movie, isSaved, movieId) {
+    if(!isSaved) {
+      return fetch (`${this.url}/movies`, {
+        method: 'POST',
+        headers: this.headers,
+        //credentials: 'include',
+        body: JSON.stringify({
+          country: movie.country,
+          director: movie.director,
+          duration: movie.duration,
+          year: movie.year,
+          movieId: movie.id,
+          image: `https://api.nomoreparties.co${movie.image.url}`,
+          trailerLink: movie.trailerLink,
+          thumbnail: `https://api.nomoreparties.co${movie.image.url}`,
+          description: movie.description,
+          nameRU: movie.nameRU,
+          nameEN: movie.nameEN,
+        }),
+      })
+      .then((res) => {
+        return this._getServerResponse(res)
+      })
+    } else {
+      return fetch (`${this.url}/movies/${movieId}`, {
+        method: 'DELETE',
+        headers: this.headers,
+        //credentials: 'include',
+      })
+      .then((res) => {
+        return this._getServerResponse(res)
+      })
+     }
   }
   
 }
 
-const mainApi = new Api({
-  url: 'https://api.movies-explorer.m-ts.nomoredomains.icu',
+const mainApi = new MainApi({
+  url: 'http://localhost:3000',
   headers: {
     'Content-Type': 'application/json'
   }

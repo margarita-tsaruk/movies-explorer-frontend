@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard.js';
 
-function MoviesCardList( { movieCards } ) {
+function MoviesCardList( { movieCards, saveMovies } ) {
   const [ addedMovies, setAddedMovies ] = useState([]);
   const [ isButtonMoreOn, setIsButtonMoreOn ] = useState(false);
   const [ countMovies, setCountMovies ] = useState(0);
@@ -13,7 +13,7 @@ function MoviesCardList( { movieCards } ) {
   const { pathname } = useLocation();
   
   const cardsElements = addedMovies.map((card) => (
-    <MoviesCard key={ card.id }  movieCard={ card } savedMovies={ savedMovies }/>
+    <MoviesCard key={ card.id }  movieCard={ card } savedMovies={ savedMovies } saveMovies={ saveMovies }/>
   ));
 
   function handleResizeMovies() {
@@ -60,7 +60,7 @@ function MoviesCardList( { movieCards } ) {
   useEffect(() => {
     if (pathname === '/movies') {
       setAddedMovies(movieCards.slice(0, renderedMovies));
-      console.log(addedMovies)
+      
       if (movieCards.length <= renderedMovies) {
         setIsButtonMoreOn(false);
       } else {

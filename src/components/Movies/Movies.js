@@ -117,7 +117,7 @@ function Movies( ) {
         ? ( 
           <Preloader />
         ) : (
-          <MoviesCardList movieCards={ movieCards }  />
+          <MoviesCardList movieCards={ movieCards } />
         )
         ) : (
           <div className="movies__error__container">
