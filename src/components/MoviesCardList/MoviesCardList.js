@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard.js';
 
-function MoviesCardList( { movieCards, saveMovies } ) {
+function MoviesCardList( { filteredMovies, saveMovies } ) {
   const [ addedMovies, setAddedMovies ] = useState([]);
   const [ isButtonMoreOn, setIsButtonMoreOn ] = useState(false);
   const [ countMovies, setCountMovies ] = useState(0);
@@ -30,9 +30,9 @@ function MoviesCardList( { movieCards, saveMovies } ) {
   } 
 
   function handleClickMoreMovies() {
-    setAddedMovies(movieCards.slice(0, addedMovies.length + countMovies))
+    setAddedMovies(filteredMovies.slice(0, addedMovies.length + countMovies))
     
-    if(addedMovies.length >= movieCards.length) {
+    if(addedMovies.length >= filteredMovies.length) {
       setIsButtonMoreOn(false);
     }
   }
@@ -59,15 +59,15 @@ function MoviesCardList( { movieCards, saveMovies } ) {
   
   useEffect(() => {
     if (pathname === '/movies') {
-      setAddedMovies(movieCards.slice(0, renderedMovies));
+      setAddedMovies(filteredMovies.slice(0, renderedMovies));
       
-      if (movieCards.length <= renderedMovies) {
+      if (filteredMovies.length <= renderedMovies) {
         setIsButtonMoreOn(false);
       } else {
         setIsButtonMoreOn(true);
       }
     }
-  }, [movieCards, renderedMovies]);
+  }, [filteredMovies, renderedMovies]);
 
   useEffect(() => {
     if (pathname === '/saved-movies') {

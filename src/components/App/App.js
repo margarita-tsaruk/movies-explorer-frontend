@@ -11,17 +11,20 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import Menu from '../Menu/Menu';
-// import { movieCards } from '../../utils/movieCards';
+import moviesApi from '../../utils/MoviesApi';
 
 import './App.css';
 
 function App() {
+  const history = useHistory();
   const { pathname } = useLocation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const history = useHistory();
   const [currentUser, setCurrentUser] = useState({});
-  // const [movieCards, setMovieCards] = useState([]);
+ 
+  //const [ isLoading, setIsLoading ] = useState(false);
+  const [ movieCards, setMovieCards ] = useState(null);
+  const [ error, setError ] = useState('');
   
   function handleAuthorization() {
     console.log(isLoggedIn);
@@ -33,20 +36,21 @@ function App() {
     setIsMenuOpen(!isMenuOpen);
   }
 
-  // useEffect(() => {
-  //   if(isLoggedIn) {
-  //     api.MovieCards()
-  //       .then((cardsData) => {
-  //         setMovieCards(cardsData);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       })
-  //   }
-  // }, [isLoggedIn])
+ function handleGetMovies() {
+  moviesApi.getMovies()
+    .then((movies) => {
+      localStorage.setItem('movies', JSON.stringify(movies));
+      setMovieCards(movies)
+    })
+    .catch((err) => {
+      console.log(err);
+      setError('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
+    })
+  }
+
 
   return (
-    <CurrentUserContext.Provider value={currentUser}>
+    <CurrentUserContext.Provider value={ currentUser }>
       <div className="page">
         { pathname === "/" || pathname === "/movies" || pathname === "/saved-movies" || pathname === "/profile"
             ? (
@@ -62,7 +66,10 @@ function App() {
           </Route>
           <Route path="/movies">
             <Movies 
-         
+              handleGetMovies={ handleGetMovies }
+              movieCards={ movieCards }
+              error={ error }
+              setError={ setError }
             />
           </Route>
           <Route path="/saved-movies">

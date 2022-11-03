@@ -3,28 +3,29 @@ import './Movies.css';
 import SearchForm from '../SearchForm/SearchForm.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
-import moviesApi from '../../utils/MoviesApi';
 
-function Movies( ) {
-  const [ isLoading, setIsLoading ] = useState(false);
-  const [ movieCards, setMovieCards ] = useState(null);
-  const [ filteredMovies, setFilteredMovies ] = useState([]);
-  const [ error, setError ] = useState('');
+function Movies( { movieCards, handleGetMovies } ) {
   const [ isChecked, setIsChecked ] = useState(false);
+  const [ filteredMovies, setFilteredMovies ] = useState(null);
+  const [ searchedMovies, setSearchedMovies ] = useState([]);
+  const [ isLoading, setIsLoading ] = useState(false);
   const [ input, setInput ] = useState('');
-  
+  const [ error, setError ] = useState('');
   
   useEffect(() => {
+    console.log(movieCards)
     const movies = localStorage.getItem('movies');
     if (movies) {
-      const getMovies = JSON.parse(movies);
-      setMovieCards(getMovies);
+      handleGetMovies();
     }
+  
+    console.log(filteredMovies)
+    console.log(JSON.parse(localStorage.getItem('movies')))
 
     const searchedMovies = localStorage.getItem('searchedMovies');
     if (searchedMovies) {
       const getSearchedMovies = JSON.parse(searchedMovies);
-      setMovieCards(getSearchedMovies);
+      setFilteredMovies(getSearchedMovies);
     }
 
     const checkbox = localStorage.getItem('checkbox');
@@ -48,61 +49,50 @@ function Movies( ) {
     });
    
     if(foundMovies[0].duration < 40) {
-      setMovieCards(shortMovies);
-      localStorage.setItem('movies', JSON.stringify(shortMovies));
-      localStorage.setItem('inputSearch', inputValueSearch);
+      setFilteredMovies(shortMovies);
       localStorage.setItem('checkbox', isChecked);
     } else {
       setError('Ничего не найдено');
-      setMovieCards(null);
+      setFilteredMovies(null);
     }
   }
 
   function handleCheckboxOff(foundMovies, inputValueSearch, isChecked) {
     if(foundMovies[0].duration > 40) {
-      setMovieCards(foundMovies);
-      localStorage.setItem('movies', JSON.stringify(foundMovies));
+      setFilteredMovies(foundMovies);
       localStorage.setItem('checkbox', isChecked);
-      localStorage.setItem('inputSearch', inputValueSearch);
     } else {
       setError('Ничего не найдено');
-      setMovieCards(null);
+      setFilteredMovies(null);
     }
   }
 
   function handleSearchMovies(inputValueSearch, isChecked) {
     setIsLoading(true);
-    moviesApi.getMovies()
-      .then((movieCards) => {
-        const foundMovies = movieCards.filter(data => {
-          return data.nameRU.toLowerCase().includes(inputValueSearch.toLowerCase());
-        });
-
-        if (foundMovies.length) {
-          localStorage.setItem('searchedMovies', JSON.stringify(foundMovies));
-          setFilteredMovies(foundMovies);
-          localStorage.setItem('inputSearch', inputValueSearch);
-        }
-        
-        if(!isChecked) {
-          handleCheckboxOn(foundMovies, inputValueSearch, isChecked);
-        } else {
-          handleCheckboxOff(foundMovies, inputValueSearch, isChecked);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        setError('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
-        setMovieCards(null);
-        localStorage.removeItem('movies');
-        localStorage.removeItem('checkbox');
-        localStorage.removeItem('inputSearch');
-      })
-      .finally(() => {
-        setIsLoading(false);
+    const movies = JSON.parse(localStorage.getItem('movies'));
+      console.log(movies)
+      const foundMovies = movies.filter(data => {
+      return data.nameRU.toLowerCase().includes(inputValueSearch.toLowerCase());
       });
-  }
+      
+      if (foundMovies.length) {
+        setSearchedMovies(foundMovies);
+        localStorage.setItem('searchedMovies', JSON.stringify(foundMovies));
+        localStorage.setItem('inputSearch', inputValueSearch);
+      }
+          
+      if (!isChecked) {
+        handleCheckboxOn(foundMovies, inputValueSearch, isChecked);
+      } else {
+        handleCheckboxOff(foundMovies, inputValueSearch, isChecked);
+      }
 
+     
+      //setError('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
+    
+      setIsLoading(false);
+    
+  }
 
   return (
     <main className="movies">
@@ -112,12 +102,12 @@ function Movies( ) {
         isChecked={ isChecked }
         input={ input }
       />
-      { movieCards ? (
+      { filteredMovies ? (
         isLoading 
         ? ( 
           <Preloader />
         ) : (
-          <MoviesCardList movieCards={ movieCards } />
+          <MoviesCardList filteredMovies={ filteredMovies } />
         )
         ) : (
           <div className="movies__error__container">
