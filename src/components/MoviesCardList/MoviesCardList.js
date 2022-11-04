@@ -17,7 +17,7 @@ function MoviesCardList( { filteredMovies, saveMovies } ) {
   ));
 
   function handleResizeMovies() {
-    if(windowWidth >= 1200) {
+    if (windowWidth >= 1200) {
       setRenderedMovies(12)
       setCountMovies(3);
     } else if (windowWidth < 900 && windowWidth >= 720) {
@@ -32,7 +32,7 @@ function MoviesCardList( { filteredMovies, saveMovies } ) {
   function handleClickMoreMovies() {
     setAddedMovies(filteredMovies.slice(0, addedMovies.length + countMovies))
     
-    if(addedMovies.length >= filteredMovies.length) {
+    if (addedMovies.length >= filteredMovies.length) {
       setIsButtonMoreOn(false);
     }
   }

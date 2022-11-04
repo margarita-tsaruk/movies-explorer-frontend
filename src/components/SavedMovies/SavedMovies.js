@@ -3,7 +3,7 @@ import './SavedMovies.css';
 import SearchForm from '../SearchForm/SearchForm.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
-import mainApi from '../../utils/MainApi';
+
 
 function SavedMovies( ) {
   const [ savedMovies, setSavedMovies ] = useState([]);
@@ -12,21 +12,6 @@ function SavedMovies( ) {
   const [ error, setError ] = useState('');
   const [ isChecked, setIsChecked ] = useState(false);
 
-  function handleSaveMovies() {
-    mainApi.getSavedMovies()
-    .then((receivedMovies) => {
-      setSavedMovies(receivedMovies);
-      console.log(receivedMovies)
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  }
-  
-  useEffect(() => {
-    handleSaveMovies();
-    setSearchedSavedMovies(savedMovies);
-  }, [savedMovies]);
 
 
   function handleCheck() {
@@ -87,7 +72,7 @@ function SavedMovies( ) {
         ? ( 
           <Preloader />
         ) : (
-          <MoviesCardList movieCards={ searchedSavedMovies } saveMovies={ handleSaveMovies } />
+          <MoviesCardList movieCards={ searchedSavedMovies }  />
         )
         ) : (
           <div className="movies__error__container">

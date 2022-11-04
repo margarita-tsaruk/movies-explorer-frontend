@@ -13,7 +13,6 @@ function SearchForm( { onSearchMovies, onCheckbox, isChecked, input, errоr } ) 
     e.preventDefault();
     if (isValid) {
       onSearchMovies(values.search, isChecked);
-      console.log('he')
       resetErrors();
     } else {
       errоr('Нужно ввести ключевое слово')

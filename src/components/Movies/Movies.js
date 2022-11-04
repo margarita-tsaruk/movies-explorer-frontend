@@ -4,19 +4,19 @@ import SearchForm from '../SearchForm/SearchForm.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 
-function Movies( { movieCards, handleGetMovies } ) {
+function Movies( { movieCards, handleGetMovies, isLoading, setIsLoading } ) {
   const [ isChecked, setIsChecked ] = useState(false);
   const [ filteredMovies, setFilteredMovies ] = useState(null);
   const [ searchedMovies, setSearchedMovies ] = useState([]);
-  const [ isLoading, setIsLoading ] = useState(false);
   const [ input, setInput ] = useState('');
   const [ error, setError ] = useState('Enter');
   
   useEffect(() => {
-    const movies = localStorage.getItem('movies');
-    if (!movies) {
-      handleGetMovies();
-    }
+    // const movies = localStorage.getItem('movies');
+    // if (movies) {
+    //   handleGetMovies();
+      
+    // }
   
     const searchedMovies = localStorage.getItem('searchedMovies');
     if (searchedMovies) {
@@ -55,10 +55,10 @@ function Movies( { movieCards, handleGetMovies } ) {
   }
 
   function handleCheckboxOff(foundMovies, isChecked) {
-    
-    if (foundMovies) {
+    if (foundMovies.length) {
       setFilteredMovies(foundMovies);
       localStorage.setItem('checkbox', isChecked);
+      console.log(foundMovies)
     } else {
       setError('Ничего не найдено');
       setFilteredMovies(null);
@@ -66,32 +66,34 @@ function Movies( { movieCards, handleGetMovies } ) {
   }
 
   function handleSearchMovies(inputValueSearch, isChecked) {
-    setIsLoading(true);
+    setIsLoading(true)
     
-    const movies = JSON.parse(localStorage.getItem('movies'));
-      
-    const foundMovies = movies.filter(data => {
-      return data.nameRU.toLowerCase().includes(inputValueSearch.toLowerCase());
-      });
+    try {
+        
+        
+      const foundMovies = movieCards.filter(data => {
+        return data.nameRU.toLowerCase().includes(inputValueSearch.toLowerCase());
+        });
 
-      console.log(foundMovies) // найденные фильмы в поиске
+        console.log(foundMovies) // найденные фильмы в поиске
 
       if (foundMovies.length) {
         localStorage.setItem('searchedMovies', JSON.stringify(foundMovies));
         setSearchedMovies(foundMovies);
         localStorage.setItem('inputSearch', inputValueSearch);
-      }
+      } 
 
       if (!isChecked) {
         handleCheckboxOn(foundMovies, inputValueSearch, isChecked); 
       } else {
         handleCheckboxOff(foundMovies, inputValueSearch, isChecked);
       }
-
+      
+    } catch (err) {
       setError('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
-    
-      setIsLoading(false);
-    
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   function handleFilterShortMovies(searchedMovies, isChecked) {
@@ -113,6 +115,8 @@ function Movies( { movieCards, handleGetMovies } ) {
   useEffect(() => {
     handleFilterShortMovies(searchedMovies, isChecked)
   }, [isChecked, searchedMovies])
+
+  
 
   return (
     <main className="movies">

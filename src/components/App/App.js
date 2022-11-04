@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Route, Switch, useLocation, useHistory} from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Header from '../Header/Header';
@@ -12,7 +12,7 @@ import Login from '../Login/Login';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import Menu from '../Menu/Menu';
 import moviesApi from '../../utils/MoviesApi';
-
+import mainApi from '../../utils/MainApi';
 
 import './App.css';
 
@@ -22,8 +22,10 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const [ isLoading, setIsLoading ] = useState(false);
  
-  const [ movieCards, setMovieCards ] = useState(null);
+  const [ movieCards, setMovieCards ] = useState([]);
+  const [ isSaved, setIsSaved ] = useState(null);
   
   function handleAuthorization() {
     console.log(isLoggedIn);
@@ -35,14 +37,58 @@ function App() {
     setIsMenuOpen(!isMenuOpen);
   }
 
- function handleGetMovies() {
-  moviesApi.getMovies()
-    .then((movies) => {
-      localStorage.setItem('movies', JSON.stringify(movies));
+//  function handleGetMovies() {
+//   setIsLoading(true)
+//   moviesApi.getMovies()
+//     .then((movies) => {
+//       localStorage.setItem('movies', JSON.stringify(movies));
+      
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     })
+//     .finally(() => {
+//       setIsLoading(false)
+//     })
+//   }
+
+  useEffect(() => {
+    if(!isLoggedIn) {
+      moviesApi.getMovies()
+        .then((movies) => {
+          setMovieCards(movies);
+          console.log(movies)
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
+  }, [isLoggedIn])
+
+  function handleGetSavedMovies() {
+    mainApi.getSavedMovies()
+    .then((receivedMovies) => {
+      setMovieCards(receivedMovies);
+      console.log(receivedMovies)
     })
     .catch((err) => {
       console.log(err);
-    })
+    });
+  }
+
+  function handleChangeMovieStatus(movie) {
+    mainApi.changeMovieStatus(movie._id, movie) 
+      .then((newMovie) => {
+        if(newMovie) {
+          handleGetSavedMovies()
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log('Wrong')
+      })
+
+    
   }
 
 
@@ -63,8 +109,10 @@ function App() {
           </Route>
           <Route path="/movies">
             <Movies 
-              handleGetMovies={ handleGetMovies }
+              //handleGetMovies={ handleGetMovies }
               movieCards={ movieCards }
+              isLoading={ isLoading }
+              setIsLoading={ setIsLoading }
             />
           </Route>
           <Route path="/saved-movies">
