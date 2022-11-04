@@ -10,27 +10,24 @@ function Movies( { movieCards, handleGetMovies } ) {
   const [ searchedMovies, setSearchedMovies ] = useState([]);
   const [ isLoading, setIsLoading ] = useState(false);
   const [ input, setInput ] = useState('');
-  const [ error, setError ] = useState('');
+  const [ error, setError ] = useState('Enter');
   
   useEffect(() => {
-    console.log(movieCards)
     const movies = localStorage.getItem('movies');
-    if (movies) {
+    if (!movies) {
       handleGetMovies();
     }
   
-    console.log(filteredMovies)
-    console.log(JSON.parse(localStorage.getItem('movies')))
-
     const searchedMovies = localStorage.getItem('searchedMovies');
     if (searchedMovies) {
-      const getSearchedMovies = JSON.parse(searchedMovies);
-      setFilteredMovies(getSearchedMovies);
+      const parsedSearchedMovies = JSON.parse(searchedMovies);
+      console.log(parsedSearchedMovies) // - найденные и сохранненные фильмы
+      setSearchedMovies(parsedSearchedMovies);
     }
 
     const checkbox = localStorage.getItem('checkbox');
     if (checkbox === 'true') {
-      setIsChecked(true);
+      setIsChecked(true)
     }
 
     const inputSearch = localStorage.getItem('inputSearch');
@@ -43,12 +40,12 @@ function Movies( { movieCards, handleGetMovies } ) {
     setIsChecked(!isChecked);
   }
 
-  function handleCheckboxOn(foundMovies, inputValueSearch, isChecked) {
+  function handleCheckboxOn(foundMovies, isChecked) {
     const shortMovies = foundMovies.filter(data => {
       return data.duration <= 40
     });
-   
-    if(foundMovies[0].duration < 40) {
+
+    if (foundMovies.length) {
       setFilteredMovies(shortMovies);
       localStorage.setItem('checkbox', isChecked);
     } else {
@@ -57,8 +54,9 @@ function Movies( { movieCards, handleGetMovies } ) {
     }
   }
 
-  function handleCheckboxOff(foundMovies, inputValueSearch, isChecked) {
-    if(foundMovies[0].duration > 40) {
+  function handleCheckboxOff(foundMovies, isChecked) {
+    
+    if (foundMovies) {
       setFilteredMovies(foundMovies);
       localStorage.setItem('checkbox', isChecked);
     } else {
@@ -69,30 +67,52 @@ function Movies( { movieCards, handleGetMovies } ) {
 
   function handleSearchMovies(inputValueSearch, isChecked) {
     setIsLoading(true);
+    
     const movies = JSON.parse(localStorage.getItem('movies'));
-      console.log(movies)
-      const foundMovies = movies.filter(data => {
+      
+    const foundMovies = movies.filter(data => {
       return data.nameRU.toLowerCase().includes(inputValueSearch.toLowerCase());
       });
-      
+
+      console.log(foundMovies) // найденные фильмы в поиске
+
       if (foundMovies.length) {
-        setSearchedMovies(foundMovies);
         localStorage.setItem('searchedMovies', JSON.stringify(foundMovies));
+        setSearchedMovies(foundMovies);
         localStorage.setItem('inputSearch', inputValueSearch);
       }
-          
+
       if (!isChecked) {
-        handleCheckboxOn(foundMovies, inputValueSearch, isChecked);
+        handleCheckboxOn(foundMovies, inputValueSearch, isChecked); 
       } else {
         handleCheckboxOff(foundMovies, inputValueSearch, isChecked);
       }
 
-     
-      //setError('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
+      setError('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
     
       setIsLoading(false);
     
   }
+
+  function handleFilterShortMovies(searchedMovies, isChecked) {
+    if (!isChecked) {
+      const shortMovies = searchedMovies.filter(data => {
+        return data.duration <= 40
+      });
+      setFilteredMovies(shortMovies);
+      localStorage.setItem('checkbox', isChecked);
+    } else {
+      const longMovies = searchedMovies.filter(data => {
+        return data.duration > 40
+      });
+      setFilteredMovies(longMovies);
+      localStorage.setItem('checkbox', isChecked);
+    }
+  }
+
+  useEffect(() => {
+    handleFilterShortMovies(searchedMovies, isChecked)
+  }, [isChecked, searchedMovies])
 
   return (
     <main className="movies">
@@ -101,6 +121,7 @@ function Movies( { movieCards, handleGetMovies } ) {
         onCheckbox={ handleCheck }
         isChecked={ isChecked }
         input={ input }
+        errоr={ setError }
       />
       { filteredMovies ? (
         isLoading 

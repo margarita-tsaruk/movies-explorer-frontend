@@ -13,6 +13,7 @@ import PageNotFound from '../PageNotFound/PageNotFound';
 import Menu from '../Menu/Menu';
 import moviesApi from '../../utils/MoviesApi';
 
+
 import './App.css';
 
 function App() {
@@ -22,9 +23,7 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
  
-  //const [ isLoading, setIsLoading ] = useState(false);
   const [ movieCards, setMovieCards ] = useState(null);
-  const [ error, setError ] = useState('');
   
   function handleAuthorization() {
     console.log(isLoggedIn);
@@ -40,11 +39,9 @@ function App() {
   moviesApi.getMovies()
     .then((movies) => {
       localStorage.setItem('movies', JSON.stringify(movies));
-      setMovieCards(movies)
     })
     .catch((err) => {
       console.log(err);
-      setError('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
     })
   }
 
@@ -68,8 +65,6 @@ function App() {
             <Movies 
               handleGetMovies={ handleGetMovies }
               movieCards={ movieCards }
-              error={ error }
-              setError={ setError }
             />
           </Route>
           <Route path="/saved-movies">

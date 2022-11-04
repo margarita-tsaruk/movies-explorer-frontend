@@ -2,8 +2,8 @@ import { useForm } from '../../hooks/useForm';
 import { useEffect } from 'react';
 import './SearchForm.css';
 
-function SearchForm( { onSearchMovies, onCheckbox, isChecked, input } ) {
-  const { values, handleChange, resetErrors, setValues } = useForm({});
+function SearchForm( { onSearchMovies, onCheckbox, isChecked, input, errоr } ) {
+  const { values, isValid, handleChange, resetErrors, setValues } = useForm({});
 
   useEffect(() => {
     setValues({ search: input });
@@ -11,8 +11,13 @@ function SearchForm( { onSearchMovies, onCheckbox, isChecked, input } ) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    onSearchMovies(values.search, isChecked);
-    resetErrors();
+    if (isValid) {
+      onSearchMovies(values.search, isChecked);
+      console.log('he')
+      resetErrors();
+    } else {
+      errоr('Нужно ввести ключевое слово')
+    }
   }
   
   return (
