@@ -1,15 +1,22 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import './MoviesCard.css';
 
 function MoviesCard( { movieCard, savedMovies, onSaveMovies  } ) {
-  const [ isClickedSave, setIsClickSave ] = useState(false);
   const { pathname } = useLocation();
-  const [ isSaved, setIsSaved ] = useState(false);
-   
+
+  useEffect(() => {
+    console.log(savedMovieId)
+  }, []);
+
+  const isSaved = pathname === '/saved-movies' ? true : savedMovies.some(i => i.movieId === movieCard.id);
+  
+  const movieId = savedMovies.filter(i => i.movieId === movieCard.movieId)
+
+  const savedMovieId = pathname === '/saved-movies' ? movieCard._id : movieId
+
   function handleMovieChangeStatus() {
-    console.log(movieCard)
-    onSaveMovies(movieCard)
+    onSaveMovies(movieCard,savedMovieId,isSaved )
   }
   
   function handleGetMovieDuration(mins) {
@@ -18,13 +25,6 @@ function MoviesCard( { movieCard, savedMovies, onSaveMovies  } ) {
     return `${ hours }ч ${ minutes }м`;
   };
 
-  function handleDeleteSavedMovies() {
-    setIsClickSave(!isClickedSave);
-    console.log('yes') ///УБРАТЬ ПОЗЖЕ
-  }
-
-  
-  
   return (
     <li className="movie-card">
       <div className="movie-card__info-container">
@@ -37,7 +37,7 @@ function MoviesCard( { movieCard, savedMovies, onSaveMovies  } ) {
             <button
               type="button"
               className="movie-card__button movie-card__button_delete"
-              onClick={ handleDeleteSavedMovies }
+              onClick= { handleMovieChangeStatus }
              />
           ) : (
             <button
@@ -54,8 +54,11 @@ function MoviesCard( { movieCard, savedMovies, onSaveMovies  } ) {
       <a className="movie-card__link" href={ movieCard.trailerLink } target="_blank" rel="noreferrer">
         <img
           className="movie-card__image"
-            src={ `https://api.nomoreparties.co${ movieCard.image.url }` }
-            alt={ movieCard.nameRU }
+          src={ pathname === "/saved-movies"
+            ?  movieCard.image
+            : `https://api.nomoreparties.co${ movieCard.image.url }` 
+          }
+          alt={ movieCard.nameRU }
         />
       </a>
     </li>

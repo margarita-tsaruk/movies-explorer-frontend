@@ -10,7 +10,7 @@ function SavedMovies( { savedMovies, onSaveMovies }) {
 
   useEffect(() => {
     isChecked ? handleCheckboxOn(searchedSavedMovies) : setSearchedSavedMovies(savedMovies);
-  }, [isChecked]);
+  }, [isChecked, savedMovies, searchedSavedMovies]);
 
   useEffect(() => {
     setSearchedSavedMovies(savedMovies);

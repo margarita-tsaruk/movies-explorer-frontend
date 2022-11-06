@@ -1,10 +1,9 @@
 import { useForm } from '../../hooks/useForm';
 import { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import './Profile.css';
 
-function Profile( ) {
+function Profile( { onSignOut } ) {
   const currentUser = useContext(CurrentUserContext);
   const { values, handleChange, errors, isValid } = useForm({});
   const [isEditedOn, setIsEditedOn] = useState(false);
@@ -15,7 +14,7 @@ function Profile( ) {
 
   return (
     <main className="profile">
-      <h3 className="profile__heading">Привет,{ currentUser.name }  !</h3>
+      <h3 className="profile__heading">Привет, { currentUser.name } !</h3>
       <form  className="profile__form">
         <fieldset className="profile__form__field">
           <label for="name-input" className="profile__label">Имя
@@ -56,7 +55,9 @@ function Profile( ) {
         </form> 
         { !isEditedOn 
           ? (
-            <><button type="submit" className="profile__edit-button" onClick={ handleEditClick }>Редактировать </button><Link className="profile__sign-out-link" to="/"> Выйти из аккаунта</Link></>
+            <><button type="submit" className="profile__edit-button" onClick={ handleEditClick }>Редактировать </button>
+              <button className="profile__sign-out-link" onClick={ onSignOut }> Выйти из аккаунта</button>
+            </>
           ) : (
             <button type="submit" className="profile__save-button" onClick={ handleEditClick }>Сохранить</button>
           )

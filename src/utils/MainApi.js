@@ -11,6 +11,31 @@ class MainApi {
       return Promise.reject(`Ошибка: ${res.status}`); 
     } 
   } 
+  getUserData() {
+    return Promise.all([this.getToken(), this.getSavedMovies()]);
+  }
+
+  getToken() {
+    return fetch(`${this.url}/users/me`, {
+      method: 'GET',
+      headers: this.headers,
+      credentials: 'include',
+    })
+    .then(this._getServerResponse);
+  }
+
+  authorize(userData) {
+    return fetch(`${this.url}/signin`, {
+      method: 'POST',
+      headers: this.headers,
+      credentials: 'include',
+      body: JSON.stringify({
+        password: userData.password,
+        email: userData.email
+      })
+    })
+    .then(this._getServerResponse);
+  }
 
   register(userData) {
     return fetch(`${this.url}/signup`, {
@@ -34,8 +59,8 @@ class MainApi {
     .then(this._getServerResponse);
   }
 
-  changeMovieStatus(movie, ) {
-   
+  changeMovieStatus(movie, id, isSaved) {
+    if (!isSaved) {
       return fetch (`${this.url}/movies`, {
         method: 'POST',
         headers: this.headers,
@@ -57,18 +82,26 @@ class MainApi {
       .then((res) => {
         return this._getServerResponse(res)
       })
-    // } else {
-    //   return fetch (`${this.url}/movies/${id}`, {
-    //     method: 'DELETE',
-    //     headers: this.headers,
-    //     credentials: 'include',
-    //   })
-    //   .then((res) => {
-    //     return this._getServerResponse(res)
-    //   })
-     
+    } else {
+      return fetch (`${this.url}/movies/${id}`, {
+        method: 'DELETE',
+        headers: this.headers,
+        credentials: 'include',
+      })
+      .then((res) => {
+        return this._getServerResponse(res)
+      })
+    }
   }
   
+  signOut() {
+    return fetch(`${this.url}/signout`, {
+      method: 'DELETE',
+      headers: this.headers,
+      credentials: 'include',
+    })
+    .then(this._getServerResponse)
+  }
 }
 
 const mainApi = new MainApi({
