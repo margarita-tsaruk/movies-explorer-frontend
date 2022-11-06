@@ -11,6 +11,7 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import Menu from '../Menu/Menu';
+import InfoTooltip from '../InfoToolTip/InfoTooltip';
 import moviesApi from '../../utils/MoviesApi';
 import mainApi from '../../utils/MainApi';
 
@@ -25,8 +26,29 @@ function App() {
   const [ isLoading, setIsLoading ] = useState(false);
  
   const [ movieCards, setMovieCards ] = useState([]);
-  const [ isSaved, setIsSaved ] = useState(null);
+  const [ savedMovies, setSavedMovies ] = useState([]);
+  const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);
   
+  function handleInfoTooltip() {
+    setIsInfoTooltipPopupOpen(true);
+  }
+
+ function handleRegistration(userData) {
+  setIsLoading(true);
+  mainApi.register(userData)
+  .then((data) => {
+    handleAuthorization(userData); 
+    handleInfoTooltip();
+  })
+  .catch((err) => {
+    console.log(err);
+    handleInfoTooltip();
+  })
+}
+
+ 
+ 
+ 
   function handleAuthorization() {
     console.log(isLoggedIn);
     setIsLoggedIn(!isLoggedIn);
@@ -37,27 +59,11 @@ function App() {
     setIsMenuOpen(!isMenuOpen);
   }
 
-//  function handleGetMovies() {
-//   setIsLoading(true)
-//   moviesApi.getMovies()
-//     .then((movies) => {
-//       localStorage.setItem('movies', JSON.stringify(movies));
-      
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     })
-//     .finally(() => {
-//       setIsLoading(false)
-//     })
-//   }
-
   useEffect(() => {
     if(!isLoggedIn) {
       moviesApi.getMovies()
         .then((movies) => {
           setMovieCards(movies);
-          console.log(movies)
         })
         .catch((err) => {
           console.log(err);
@@ -68,7 +74,7 @@ function App() {
   function handleGetSavedMovies() {
     mainApi.getSavedMovies()
     .then((receivedMovies) => {
-      setMovieCards(receivedMovies);
+      setSavedMovies(receivedMovies);
       console.log(receivedMovies)
     })
     .catch((err) => {
@@ -77,18 +83,16 @@ function App() {
   }
 
   function handleChangeMovieStatus(movie) {
-    mainApi.changeMovieStatus(movie._id, movie) 
-      .then((newMovie) => {
-        if(newMovie) {
-          handleGetSavedMovies()
-        }
+    mainApi.changeMovieStatus(movie) 
+      .then((savedMovie) => {
+ 
+          console.log(savedMovie)
+        
       })
       .catch((err) => {
         console.log(err);
         console.log('Wrong')
       })
-
-    
   }
 
 
@@ -109,15 +113,17 @@ function App() {
           </Route>
           <Route path="/movies">
             <Movies 
-              //handleGetMovies={ handleGetMovies }
               movieCards={ movieCards }
               isLoading={ isLoading }
               setIsLoading={ setIsLoading }
+              savedMovies={ savedMovies }
+              onSaveMovies={ handleChangeMovieStatus }
             />
           </Route>
           <Route path="/saved-movies">
             <SavedMovies 
-            
+              savedMovies={ savedMovies }
+              onSaveMovies={ handleChangeMovieStatus }
             />
           </Route>
           <Route path="/profile">
@@ -125,7 +131,7 @@ function App() {
           </Route>
           <Route path="/signup">
             <Register 
-            onSignedUp={ handleAuthorization } />
+            onSignedUp={ handleRegistration } />
           </Route>
           <Route path="/signin">
             <Login 

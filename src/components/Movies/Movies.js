@@ -4,24 +4,18 @@ import SearchForm from '../SearchForm/SearchForm.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 
-function Movies( { movieCards, handleGetMovies, isLoading, setIsLoading } ) {
+function Movies( { movieCards, isLoading, setIsLoading, savedMovies, onSaveMovies } ) {
   const [ isChecked, setIsChecked ] = useState(false);
   const [ filteredMovies, setFilteredMovies ] = useState(null);
   const [ searchedMovies, setSearchedMovies ] = useState([]);
   const [ input, setInput ] = useState('');
   const [ error, setError ] = useState('Enter');
   
-  useEffect(() => {
-    // const movies = localStorage.getItem('movies');
-    // if (movies) {
-    //   handleGetMovies();
-      
-    // }
-  
+  useEffect(() => {  
     const searchedMovies = localStorage.getItem('searchedMovies');
     if (searchedMovies) {
       const parsedSearchedMovies = JSON.parse(searchedMovies);
-      console.log(parsedSearchedMovies) // - найденные и сохранненные фильмы
+    //  console.log(parsedSearchedMovies) // - найденные и сохранненные фильмы
       setSearchedMovies(parsedSearchedMovies);
     }
 
@@ -116,8 +110,6 @@ function Movies( { movieCards, handleGetMovies, isLoading, setIsLoading } ) {
     handleFilterShortMovies(searchedMovies, isChecked)
   }, [isChecked, searchedMovies])
 
-  
-
   return (
     <main className="movies">
       <SearchForm 
@@ -132,7 +124,12 @@ function Movies( { movieCards, handleGetMovies, isLoading, setIsLoading } ) {
         ? ( 
           <Preloader />
         ) : (
-          <MoviesCardList filteredMovies={ filteredMovies } />
+          <MoviesCardList 
+            filteredMovies={ filteredMovies } 
+            savedMovies={ savedMovies }
+            onSaveMovies={ onSaveMovies }
+            
+          />
         )
         ) : (
           <div className="movies__error__container">

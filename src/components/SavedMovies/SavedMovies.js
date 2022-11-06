@@ -2,47 +2,49 @@ import { useState, useEffect } from 'react';
 import './SavedMovies.css';
 import SearchForm from '../SearchForm/SearchForm.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import Preloader from '../Preloader/Preloader';
 
-
-function SavedMovies( ) {
-  const [ savedMovies, setSavedMovies ] = useState([]);
+function SavedMovies( { savedMovies, onSaveMovies }) {
   const [ searchedSavedMovies, setSearchedSavedMovies ] = useState([]);
-  const [ isLoading, setIsLoading ] = useState(false);
   const [ error, setError ] = useState('');
   const [ isChecked, setIsChecked ] = useState(false);
 
+  useEffect(() => {
+    isChecked ? handleCheckboxOn(searchedSavedMovies) : setSearchedSavedMovies(savedMovies);
+  }, [isChecked]);
 
+  useEffect(() => {
+    setSearchedSavedMovies(savedMovies);
+  }, [savedMovies]);
 
   function handleCheck() {
     setIsChecked(!isChecked);
   }
 
-  function handleCheckboxOn(foundMovies) {
+  function handleCheckboxOn(foundMovies, isChecked) {
     const shortMovies = foundMovies.filter(data => {
       return data.duration <= 40
     });
-   
-    if(foundMovies[0].duration < 40) {
+
+    if (foundMovies.length) {
       setSearchedSavedMovies(shortMovies);
+      localStorage.setItem('checkbox', isChecked);
     } else {
       setError('Ничего не найдено');
-      setSearchedSavedMovies([]);
+      setSearchedSavedMovies(null);
     }
   }
 
-  function handleCheckboxOff(foundMovies) {
-    if(foundMovies[0].duration > 40) {
+  function handleCheckboxOff(foundMovies, isChecked) {
+    if (foundMovies.length) {
       setSearchedSavedMovies(foundMovies);
+      localStorage.setItem('checkbox', isChecked);
     } else {
       setError('Ничего не найдено');
-      setSearchedSavedMovies([]);
+      setSearchedSavedMovies(null);
     }
   }
 
   function handleSearchMovies(inputValueSearch, isChecked) {
-    setIsLoading(true);
-    
     const foundMovies = searchedSavedMovies.filter(data => {
       return data.nameRU.toLowerCase().includes(inputValueSearch.toLowerCase());
     });
@@ -52,13 +54,7 @@ function SavedMovies( ) {
     } else {
       handleCheckboxOff(foundMovies);
     }
-     
-    setIsLoading(false);
   }
-
-  useEffect(() => {
-    isChecked ? handleCheckboxOn(searchedSavedMovies) : setSearchedSavedMovies(savedMovies);
-  }, [isChecked]);
 
   return (
     <main className="movies">
@@ -67,13 +63,11 @@ function SavedMovies( ) {
         onCheckbox={ handleCheck }
         isChecked={ isChecked }
       />
-      { searchedSavedMovies ? (
-        isLoading 
-        ? ( 
-          <Preloader />
-        ) : (
-          <MoviesCardList movieCards={ searchedSavedMovies }  />
-        )
+      { searchedSavedMovies 
+      ? (
+            <MoviesCardList 
+            savedMovies={ searchedSavedMovies }
+            onSaveMovies={ onSaveMovies }  />
         ) : (
           <div className="movies__error__container">
             <h3 className="movies__error__text">{ error }</h3>

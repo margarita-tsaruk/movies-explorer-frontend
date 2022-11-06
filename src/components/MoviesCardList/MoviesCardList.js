@@ -3,17 +3,22 @@ import { useLocation } from 'react-router-dom';
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard.js';
 
-function MoviesCardList( { filteredMovies, saveMovies } ) {
+function MoviesCardList( { filteredMovies, onSaveMovies, savedMovies } ) {
   const [ addedMovies, setAddedMovies ] = useState([]);
   const [ isButtonMoreOn, setIsButtonMoreOn ] = useState(false);
   const [ countMovies, setCountMovies ] = useState(0);
   const [ renderedMovies, setRenderedMovies ] = useState(0);
   const [ windowWidth, setWindowWidth ] = useState('');
-  const [ savedMovies, setSavedMovies ] = useState([]);
+ 
   const { pathname } = useLocation();
   
   const cardsElements = addedMovies.map((card) => (
-    <MoviesCard key={ card.id }  movieCard={ card } savedMovies={ savedMovies } saveMovies={ saveMovies }/>
+    <MoviesCard 
+      key={ card.id }  
+      movieCard={ card } 
+      savedMovies={ savedMovies } 
+      onSaveMovies={ onSaveMovies }
+    />
   ));
 
   function handleResizeMovies() {
@@ -73,6 +78,7 @@ function MoviesCardList( { filteredMovies, saveMovies } ) {
     if (pathname === '/saved-movies') {
       console.log('hey')
       setAddedMovies(savedMovies);
+      console.log(savedMovies)
       setIsButtonMoreOn(false);
     }
   }, [savedMovies]);
