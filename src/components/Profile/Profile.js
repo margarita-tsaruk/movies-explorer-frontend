@@ -1,14 +1,27 @@
 import { useForm } from '../../hooks/useForm';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import './Profile.css';
 
-function Profile( { onSignOut } ) {
+function Profile( { isLoggedIn, onUpdateUserData, onSignOut } ) {
   const currentUser = useContext(CurrentUserContext);
-  const { values, handleChange, errors, isValid } = useForm({});
-  const [isEditedOn, setIsEditedOn] = useState(false);
+  const { values, handleChange, errors, isValid, resetErrors, setValues } = useForm({});
+  const [ isEditedOn, setIsEditedOn ] = useState(false);
+
+  useEffect(() => {
+    if(isLoggedIn) {
+      resetErrors();
+      setValues({ name: currentUser.name, email: currentUser.email });
+    }
+  }, [currentUser, isLoggedIn]);
 
   function handleEditClick() {
+    setIsEditedOn(!isEditedOn);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    onUpdateUserData({...values});
     setIsEditedOn(!isEditedOn);
   }
 
@@ -17,7 +30,7 @@ function Profile( { onSignOut } ) {
       <h3 className="profile__heading">Привет, { currentUser.name } !</h3>
       <form  className="profile__form">
         <fieldset className="profile__form__field">
-          <label for="name-input" className="profile__label">Имя
+          <label htmlFor="name-input" className="profile__label">Имя
             <input
               id="name-input"
               type="text"
@@ -35,7 +48,7 @@ function Profile( { onSignOut } ) {
               { !isValid && errors.name }
             </span>
           </label>
-          <label for="email-input" className="profile__label">E-mail
+          <label htmlFor="email-input" className="profile__label">E-mail
             <input
               id="email-input"
               type="email"
@@ -59,7 +72,7 @@ function Profile( { onSignOut } ) {
               <button className="profile__sign-out-link" onClick={ onSignOut }> Выйти из аккаунта</button>
             </>
           ) : (
-            <button type="submit" className="profile__save-button" onClick={ handleEditClick }>Сохранить</button>
+            <button type="submit" className="profile__save-button" onClick={ handleSubmit }>Сохранить</button>
           )
         }
     </main>

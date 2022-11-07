@@ -6,12 +6,12 @@ function MoviesCard( { movieCard, savedMovies, onSaveMovies  } ) {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    console.log(savedMovieId)
+    console.log(movieId)
   }, []);
 
   const isSaved = pathname === '/saved-movies' ? true : savedMovies.some(i => i.movieId === movieCard.id);
   
-  const movieId = savedMovies.filter(i => i.movieId === movieCard.movieId)
+  const movieId = savedMovies.filter(i => i.movieId === movieCard.id)
 
   const savedMovieId = pathname === '/saved-movies' ? movieCard._id : movieId
 

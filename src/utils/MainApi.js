@@ -11,9 +11,6 @@ class MainApi {
       return Promise.reject(`Ошибка: ${res.status}`); 
     } 
   } 
-  getUserData() {
-    return Promise.all([this.getToken(), this.getSavedMovies()]);
-  }
 
   getToken() {
     return fetch(`${this.url}/users/me`, {
@@ -48,6 +45,30 @@ class MainApi {
       })
     })
     .then(this._getServerResponse)
+  }
+
+  getUserInfo() {
+    return fetch (`${this.url}/users/me`, {
+      method: 'GET',
+      headers: this.headers,
+      credentials: 'include',
+    })
+    .then(this._getServerResponse)
+  }
+
+  updateUserInfo(name, email) {
+    return fetch (`${this.url}/users/me`, {
+      headers: this.headers,
+      credentials: 'include',
+      method: 'PATCH',
+      body: JSON.stringify ({
+        name: name,
+        email: email,
+      })
+    })
+    .then((res) => {
+      return this._getServerResponse(res)
+    })
   }
   
   getSavedMovies() {

@@ -34,15 +34,18 @@ function App() {
   }
 
   function handleCheckToken() {
-    mainApi.getUserData()
-      .then(([userData, savedMovies]) => {
-        setCurrentUser(userData);
+    mainApi.getToken()
+      .then((data) => {
         setIsLoggedIn(true);
-        setSavedMovies(savedMovies);
+        setCurrentUser(data);
         history.push('/movies');
       })
       .catch((err) => {
         console.log(err);
+        localStorage.removeItem('loggedIn');
+        localStorage.removeItem('searchedMovies');
+        localStorage.removeItem('inputSearch');
+        localStorage.removeItem('checkbox');
       })
   } 
 
@@ -53,8 +56,26 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    if(isLoggedIn) {
+      mainApi.getUserInfo()
+        .then((userData) => {
+          setCurrentUser(userData);
+          setSavedMovies(savedMovies);
+        })
+        .catch((err) => {
+          console.log(err);
+          setIsLoggedIn(false);
+          handleInfoTooltip();
+          localStorage.removeItem('loggedIn');
+          localStorage.removeItem('searchedMovies');
+          localStorage.removeItem('inputSearch');
+          localStorage.removeItem('checkbox');
+        })
+    }
+  }, [])
+
   function handleAuthorization(userData) {
-    console.log(isLoggedIn);
     mainApi.authorize(userData)
     .then((userData) => {
       localStorage.setItem('loggedIn', true);
@@ -73,9 +94,8 @@ function App() {
   function handleRegistration(userData) {
     setIsLoading(true);
     mainApi.register(userData)
-    .then((data) => {
+    .then((userData) => {
       handleAuthorization(userData); 
-     
     })
     .catch((err) => {
       console.log(err);
@@ -86,7 +106,26 @@ function App() {
       setIsLoading(false);
     });
   }
-  
+
+  function handleUpdateUserInfo(userData) {
+    mainApi.updateUserInfo(userData.name, userData.email)
+    .then((newUser) => {
+      setCurrentUser(prevState => {
+        return {
+          ...prevState,
+          name: newUser.name,
+          email: newUser.email,
+        }
+      })
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      setIsLoading(false);
+    });
+  }
+
   function handleMenuOpen() {
     setIsMenuOpen(!isMenuOpen);
   }
@@ -143,7 +182,6 @@ function App() {
     });
   }
 
-
   return (
     <CurrentUserContext.Provider value={ currentUser }>
       <div className="page">
@@ -188,6 +226,7 @@ function App() {
             path="/profile"
             isLoggedIn={ isLoggedIn }
             component={ Profile } 
+            onUpdateUserData={ handleUpdateUserInfo }
             onSignOut={ handleSignOut }
           />
           <Route path="*">

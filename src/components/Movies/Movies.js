@@ -15,13 +15,12 @@ function Movies( { movieCards, isLoading, setIsLoading, savedMovies, onSaveMovie
     const searchedMovies = localStorage.getItem('searchedMovies');
     if (searchedMovies) {
       const parsedSearchedMovies = JSON.parse(searchedMovies);
-    //  console.log(parsedSearchedMovies) // - найденные и сохранненные фильмы
       setSearchedMovies(parsedSearchedMovies);
     }
 
     const checkbox = localStorage.getItem('checkbox');
-    if (checkbox === 'true') {
-      setIsChecked(true)
+    if (checkbox) {
+      setIsChecked(true);
     }
 
     const inputSearch = localStorage.getItem('inputSearch');
@@ -41,6 +40,7 @@ function Movies( { movieCards, isLoading, setIsLoading, savedMovies, onSaveMovie
 
     if (foundMovies.length) {
       setFilteredMovies(shortMovies);
+      console.log(shortMovies)
       localStorage.setItem('checkbox', isChecked);
     } else {
       setError('Ничего не найдено');
@@ -63,11 +63,9 @@ function Movies( { movieCards, isLoading, setIsLoading, savedMovies, onSaveMovie
     setIsLoading(true)
     
     try {
-        
-        
       const foundMovies = movieCards.filter(data => {
         return data.nameRU.toLowerCase().includes(inputValueSearch.toLowerCase());
-        });
+      });
 
         console.log(foundMovies) // найденные фильмы в поиске
 
@@ -82,11 +80,10 @@ function Movies( { movieCards, isLoading, setIsLoading, savedMovies, onSaveMovie
       } else {
         handleCheckboxOff(foundMovies, inputValueSearch, isChecked);
       }
-      
     } catch (err) {
       setError('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
     } finally {
-      setIsLoading(false)
+      setTimeout(()=> setIsLoading(false), 500)
     }
   }
 
@@ -121,16 +118,15 @@ function Movies( { movieCards, isLoading, setIsLoading, savedMovies, onSaveMovie
       />
       { filteredMovies ? (
         isLoading 
-        ? ( 
-          <Preloader />
-        ) : (
-          <MoviesCardList 
-            filteredMovies={ filteredMovies } 
-            savedMovies={ savedMovies }
-            onSaveMovies={ onSaveMovies }
-            
-          />
-        )
+          ? ( 
+            <Preloader />
+          ) : (
+            <MoviesCardList 
+              filteredMovies={ filteredMovies } 
+              savedMovies={ savedMovies }
+              onSaveMovies={ onSaveMovies }
+            />
+          )
         ) : (
           <div className="movies__error__container">
             <h3 className="movies__error__text">{ error }</h3>

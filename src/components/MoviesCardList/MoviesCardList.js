@@ -14,7 +14,7 @@ function MoviesCardList( { filteredMovies, onSaveMovies, savedMovies } ) {
   
   const cardsElements = addedMovies.map((card) => (
     <MoviesCard 
-      key={ card.id }  
+      key={ card.id || card._id}  
       movieCard={ card } 
       savedMovies={ savedMovies } 
       onSaveMovies={ onSaveMovies }
