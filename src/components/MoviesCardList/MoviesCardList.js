@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard.js';
 
-function MoviesCardList( { filteredMovies, onSaveMovies, savedMovies } ) {
+function MoviesCardList( { filteredMovies, onSaveMovies, savedMovies, onMovieDelete } ) {
   const [ addedMovies, setAddedMovies ] = useState([]);
   const [ isButtonMoreOn, setIsButtonMoreOn ] = useState(false);
   const [ countMovies, setCountMovies ] = useState(0);
@@ -18,6 +18,7 @@ function MoviesCardList( { filteredMovies, onSaveMovies, savedMovies } ) {
       movieCard={ card } 
       savedMovies={ savedMovies } 
       onSaveMovies={ onSaveMovies }
+      onMovieDelete={ onMovieDelete }
     />
   ));
 

@@ -157,8 +157,9 @@ function App() {
     });
   }
 
-  function handleChangeMovieStatus(movie, id, isSaved) {
-    mainApi.changeMovieStatus(movie, id, isSaved) 
+  function handleChangeMovieStatus(movie, saved) {
+    //const isSaved = savedMovies.some(i => i.movieId === movie.id);
+    mainApi.changeMovieStatus(movie, saved) 
       .then((savedMovie) => {
         handleGetSavedMovies()
           console.log(savedMovie)
@@ -168,6 +169,16 @@ function App() {
         console.log('Wrong')
       })
   }
+
+  // function handleCardDelete(movie) {
+  //   mainApi.deleteMovie(movie._id)
+  //     .then(() => {
+  //       setSavedMovies(savedMovies.filter((currentMovie) => currentMovie._id !== movie._id));
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     })
+  // }
 
   function handleSignOut() {
     mainApi.signOut()

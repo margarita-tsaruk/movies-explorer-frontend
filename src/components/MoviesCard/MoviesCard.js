@@ -1,24 +1,30 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import './MoviesCard.css';
 
 function MoviesCard( { movieCard, savedMovies, onSaveMovies  } ) {
   const { pathname } = useLocation();
-
+  const [ isSaved, setIsSaved ] = useState(false)
   useEffect(() => {
-    console.log(movieId)
+    console.log(movieCard)
+    console.log(savedMovies)
+    console.log(savedMovieId)
   }, []);
 
-  const isSaved = pathname === '/saved-movies' ? true : savedMovies.some(i => i.movieId === movieCard.id);
+  const saved = pathname === '/saved-movies' ? true : savedMovies.some(i => i.movieId === movieCard.id);
   
   const movieId = savedMovies.filter(i => i.movieId === movieCard.id)
 
-  const savedMovieId = pathname === '/saved-movies' ? movieCard._id : movieId
+  const savedMovieId = pathname === '/saved-movies' ? movieCard.movieId : movieId
 
   function handleMovieChangeStatus() {
-    onSaveMovies(movieCard,savedMovieId,isSaved )
+    onSaveMovies(movieCard, savedMovieId)
+    console.log(saved)
+    console.log(savedMovies)
+
+    setIsSaved(!isSaved)
   }
-  
+
   function handleGetMovieDuration(mins) {
     let hours = Math.trunc(mins/60);
     let minutes = mins % 60;

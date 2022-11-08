@@ -3,7 +3,7 @@ import './SavedMovies.css';
 import SearchForm from '../SearchForm/SearchForm.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-function SavedMovies( { savedMovies, onSaveMovies }) {
+function SavedMovies( { savedMovies, onSaveMovies, onMovieDelete }) {
   const [ searchedSavedMovies, setSearchedSavedMovies ] = useState([]);
   const [ error, setError ] = useState('');
   const [ isChecked, setIsChecked ] = useState(false);
@@ -67,7 +67,8 @@ function SavedMovies( { savedMovies, onSaveMovies }) {
       ? (
             <MoviesCardList 
             savedMovies={ searchedSavedMovies }
-            onSaveMovies={ onSaveMovies }  />
+            onSaveMovies={ onSaveMovies } 
+            onMovieDelete={ onMovieDelete } />
         ) : (
           <div className="movies__error__container">
             <h3 className="movies__error__text">{ error }</h3>
