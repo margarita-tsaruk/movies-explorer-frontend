@@ -2,27 +2,28 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import './MoviesCard.css';
 
-function MoviesCard( { movieCard, savedMovies, onSaveMovies  } ) {
+function MoviesCard( { movieCard, savedMovies, onSaveMovies, onMovieDelete } ) {
   const { pathname } = useLocation();
   const [ isSaved, setIsSaved ] = useState(false)
+  
   useEffect(() => {
-    console.log(movieCard)
-    console.log(savedMovies)
-    console.log(savedMovieId)
+    console.log(movieCard) // найденная карточка в контейнере  с id  (например 29)
+    console.log(savedMovies) //сохраненная карточка - пустая при рендере
+    console.log(saved)  // 
   }, []);
 
-  const saved = pathname === '/saved-movies' ? true : savedMovies.some(i => i.movieId === movieCard.id);
+  const saved = savedMovies.some(i => i.movieId === movieCard.id);
   
-  const movieId = savedMovies.filter(i => i.movieId === movieCard.id)
-
-  const savedMovieId = pathname === '/saved-movies' ? movieCard.movieId : movieId
+  function handleDeleteMovie() {
+    onMovieDelete(movieCard)
+  }
 
   function handleMovieChangeStatus() {
-    onSaveMovies(movieCard, savedMovieId)
-    console.log(saved)
-    console.log(savedMovies)
-
-    setIsSaved(!isSaved)
+    onSaveMovies(movieCard, saved) // сохраняем карточку: если saved - ложь - POST, true - DELETE
+    setIsSaved(!isSaved);
+    console.log(saved) // верно - ложь что один элемент массива соответсвует условию - ключи movieId = id 
+    console.log(savedMovies) // сохраненные карточки с movieId
+   
   }
 
   function handleGetMovieDuration(mins) {
@@ -43,7 +44,7 @@ function MoviesCard( { movieCard, savedMovies, onSaveMovies  } ) {
             <button
               type="button"
               className="movie-card__button movie-card__button_delete"
-              onClick= { handleMovieChangeStatus }
+              onClick= { handleDeleteMovie }
              />
           ) : (
             <button

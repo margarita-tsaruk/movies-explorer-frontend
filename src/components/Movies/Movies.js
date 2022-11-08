@@ -19,7 +19,7 @@ function Movies( { movieCards, isLoading, setIsLoading, savedMovies, onSaveMovie
     }
 
     const checkbox = localStorage.getItem('checkbox');
-    if (checkbox) {
+    if (checkbox === 'true') {
       setIsChecked(true);
     }
 

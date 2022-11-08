@@ -150,19 +150,19 @@ function App() {
     mainApi.getSavedMovies()
     .then((receivedMovies) => {
       setSavedMovies(receivedMovies);
-      console.log(receivedMovies)
     })
     .catch((err) => {
       console.log(err);
     });
   }
 
-  function handleChangeMovieStatus(movie, saved) {
+  function handleChangeMovieStatus(movie, isSaved) {
     //const isSaved = savedMovies.some(i => i.movieId === movie.id);
-    mainApi.changeMovieStatus(movie, saved) 
-      .then((savedMovie) => {
+    mainApi.changeMovieStatus(movie, isSaved) 
+      .then((newMovie) => {
         handleGetSavedMovies()
-          console.log(savedMovie)
+        console.log(savedMovies)
+        setSavedMovies(savedMovies.map((currentMovie) => currentMovie.movieId === movie.movieId ? newMovie : currentMovie));
       })
       .catch((err) => {
         console.log(err);
@@ -170,15 +170,16 @@ function App() {
       })
   }
 
-  // function handleCardDelete(movie) {
-  //   mainApi.deleteMovie(movie._id)
-  //     .then(() => {
-  //       setSavedMovies(savedMovies.filter((currentMovie) => currentMovie._id !== movie._id));
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     })
-  // }
+  function handleMovieDelete(movie) {
+    mainApi.deleteSavedMovie(movie)
+    .then(() => {
+        handleGetSavedMovies()
+        setSavedMovies((state) => state.filter((movie) => movie.movieId !== movie.id));
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
 
   function handleSignOut() {
     mainApi.signOut()
@@ -232,6 +233,7 @@ function App() {
             component={ SavedMovies } 
             savedMovies={ savedMovies }
             onSaveMovies={ handleChangeMovieStatus }
+            onMovieDelete={ handleMovieDelete }
           />
           <ProtectedRoute 
             path="/profile"

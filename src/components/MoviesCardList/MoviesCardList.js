@@ -77,7 +77,7 @@ function MoviesCardList( { filteredMovies, onSaveMovies, savedMovies, onMovieDel
 
   useEffect(() => {
     if (pathname === '/saved-movies') {
-      console.log('hey')
+
       setAddedMovies(savedMovies);
       console.log(savedMovies)
       setIsButtonMoreOn(false);

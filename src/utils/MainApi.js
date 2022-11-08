@@ -80,7 +80,7 @@ class MainApi {
     .then(this._getServerResponse);
   }
 
-  changeMovieStatus(movie, isSaved, id) {
+  changeMovieStatus(movie, isSaved) {
     if (!isSaved) {
       return fetch (`${this.url}/movies`, {
         method: 'POST',
@@ -105,7 +105,7 @@ class MainApi {
       })
     } else {
       const movieId = movie.id
-      return fetch (`${this.url}/movies/${movieId}`, {
+      return fetch (`${this.url}/movies/${ movieId }`, {
         method: 'DELETE',
         headers: this.headers,
         credentials: 'include',
@@ -116,16 +116,17 @@ class MainApi {
     }
   }
 
-  // deleteMovie(_id) {
-  //   return fetch (`${this.url}/cards/${_id}`, {
-  //     method: 'DELETE',
-  //     headers: this.headers,
-  //     credentials: 'include',
-  //   })
-  //   .then((res) => {
-  //     return this._getServerResponse(res)
-  //   })
-  //}
+  deleteSavedMovie(movie) {
+    const movieId = movie.movieId
+    return fetch (`${this.url}/movies/${ movieId }`, {
+      method: 'DELETE',
+      headers: this.headers,
+      credentials: 'include',
+    })
+    .then((res) => {
+      return this._getServerResponse(res)
+    })
+  }
   
   signOut() {
     return fetch(`${this.url}/signout`, {
