@@ -8,11 +8,7 @@ function SavedMovies( { savedMovies, onSaveMovies, onMovieDelete }) {
   const [ error, setError ] = useState('');
   const [ isChecked, setIsChecked ] = useState(false);
 
-  useEffect(() => {
-    isChecked ? handleCheckboxOn(searchedSavedMovies) : setSearchedSavedMovies(savedMovies);
-  }, [isChecked, savedMovies, searchedSavedMovies]);
-
-  useEffect(() => {
+  useEffect(() => {   
     setSearchedSavedMovies(savedMovies);
   }, [savedMovies]);
 
@@ -20,41 +16,45 @@ function SavedMovies( { savedMovies, onSaveMovies, onMovieDelete }) {
     setIsChecked(!isChecked);
   }
 
-  function handleCheckboxOn(foundMovies, isChecked) {
-    const shortMovies = foundMovies.filter(data => {
-      return data.duration <= 40
-    });
-
-    if (foundMovies.length) {
-      setSearchedSavedMovies(shortMovies);
-      localStorage.setItem('checkbox', isChecked);
-    } else {
-      setError('Ничего не найдено');
-      setSearchedSavedMovies(null);
-    }
-  }
-
-  function handleCheckboxOff(foundMovies, isChecked) {
-    if (foundMovies.length) {
-      setSearchedSavedMovies(foundMovies);
-      localStorage.setItem('checkbox', isChecked);
-    } else {
-      setError('Ничего не найдено');
-      setSearchedSavedMovies(null);
-    }
-  }
-
-  function handleSearchMovies(inputValueSearch, isChecked) {
-    const foundMovies = searchedSavedMovies.filter(data => {
+  function handleSearchMovies(inputValueSearch) {
+    console.log(savedMovies)
+    const foundMovies = savedMovies.filter(data => {
       return data.nameRU.toLowerCase().includes(inputValueSearch.toLowerCase());
     });
 
-    if(!isChecked) {
-      handleCheckboxOn(foundMovies);
+    setSearchedSavedMovies(foundMovies)
+  }
+
+  function handleFilterShortMovies(savedMovies, isChecked) {
+    if (!isChecked) {
+      const shortMovies = savedMovies.filter(data => {
+        return data.duration <= 40
+      });
+      if (shortMovies) {
+        setSearchedSavedMovies(shortMovies);
+        
+        console.log('works')
+      } else {
+        setError('Ничего не найдено');
+        setSearchedSavedMovies(null);
+      }
     } else {
-      handleCheckboxOff(foundMovies);
+      const longMovies = savedMovies.filter(data => {
+        return data.duration > 40
+      });
+      if (longMovies) {
+        setSearchedSavedMovies(longMovies);
+       
+      } else {
+        setError('Ничего не найдено');
+        setSearchedSavedMovies(null);
+      };
     }
   }
+
+  useEffect(() => {
+    handleFilterShortMovies(savedMovies, isChecked)
+  }, [isChecked])
 
   return (
     <main className="movies">
@@ -65,10 +65,11 @@ function SavedMovies( { savedMovies, onSaveMovies, onMovieDelete }) {
       />
       { searchedSavedMovies 
       ? (
-            <MoviesCardList 
+          <MoviesCardList 
             savedMovies={ searchedSavedMovies }
             onSaveMovies={ onSaveMovies } 
-            onMovieDelete={ onMovieDelete } />
+            onMovieDelete={ onMovieDelete } 
+          />
         ) : (
           <div className="movies__error__container">
             <h3 className="movies__error__text">{ error }</h3>

@@ -21,9 +21,7 @@ function Register( { onSignedUp } ) {
 
   function handleSubmit(event) {
     event.preventDefault();
-        
     onSignedUp( {...values} );
-
     resetErrors();
   }
 

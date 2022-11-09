@@ -21,7 +21,7 @@ import './App.css';
 function App() {
   const history = useHistory();
   const { pathname } = useLocation();
-  const [ isLoggedIn, setIsLoggedIn ] = useState(false);
+  const [ isLoggedIn, setIsLoggedIn ] = useState(JSON.parse(localStorage.getItem('loggedIn'))); 
   const [ isMenuOpen, setIsMenuOpen ] = useState(false);
   const [ currentUser, setCurrentUser ] = useState({});
   const [ isLoading, setIsLoading ] = useState(false);
@@ -50,30 +50,23 @@ function App() {
   } 
 
   useEffect(() => {
-    const loggedIn = localStorage.getItem('loggedIn');
-    if (loggedIn) {
+    if (isLoggedIn) {
       handleCheckToken();
     }
   }, []);
 
   useEffect(() => {
-    if(isLoggedIn) {
-      mainApi.getUserInfo()
-        .then((userData) => {
+    if (isLoggedIn) {
+      mainApi.getData()
+        .then(([userData, moviesData]) => {
           setCurrentUser(userData);
-          setSavedMovies(savedMovies);
+          setSavedMovies(moviesData);
         })
         .catch((err) => {
           console.log(err);
-          setIsLoggedIn(false);
-          handleInfoTooltip();
-          localStorage.removeItem('loggedIn');
-          localStorage.removeItem('searchedMovies');
-          localStorage.removeItem('inputSearch');
-          localStorage.removeItem('checkbox');
         })
     }
-  }, [])
+  }, [isLoggedIn])
 
   function handleAuthorization(userData) {
     mainApi.authorize(userData)
@@ -135,7 +128,7 @@ function App() {
   }
 
   useEffect(() => {
-    if(!isLoggedIn) {
+    if(isLoggedIn) {
       moviesApi.getMovies()
         .then((movies) => {
           setMovieCards(movies);
@@ -156,17 +149,18 @@ function App() {
     });
   }
 
-  function handleChangeMovieStatus(movie, isSaved) {
-    //const isSaved = savedMovies.some(i => i.movieId === movie.id);
+  function handleChangeMovieStatus(movie) {
+    const isSaved = savedMovies.some(i => i.movieId === movie.id);
     mainApi.changeMovieStatus(movie, isSaved) 
       .then((newMovie) => {
         handleGetSavedMovies()
-        console.log(savedMovies)
-        setSavedMovies(savedMovies.map((currentMovie) => currentMovie.movieId === movie.movieId ? newMovie : currentMovie));
+        console.log(movie)
+        setSavedMovies(savedMovies.map((savedMovie) => 
+          savedMovie.movieId === movie.id ? newMovie : savedMovie));
+        console.log(newMovie)
       })
       .catch((err) => {
         console.log(err);
-        console.log('Wrong')
       })
   }
 

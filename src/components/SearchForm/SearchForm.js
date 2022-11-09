@@ -6,7 +6,7 @@ function SearchForm( { onSearchMovies, onCheckbox, isChecked, input, errоr } ) 
   const { values, isValid, handleChange, resetErrors, setValues } = useForm({});
 
   useEffect(() => {
-    setValues({ search: input });
+    setValues( { search: input } );
   }, [input, setValues]);
 
   function handleSubmit(e) {

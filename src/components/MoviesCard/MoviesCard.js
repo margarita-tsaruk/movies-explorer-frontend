@@ -1,35 +1,27 @@
-import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import './MoviesCard.css';
 
 function MoviesCard( { movieCard, savedMovies, onSaveMovies, onMovieDelete } ) {
   const { pathname } = useLocation();
-  const [ isSaved, setIsSaved ] = useState(false)
+ 
+  const isSaved = savedMovies.some(i => i.movieId === movieCard.id );
   
-  useEffect(() => {
-    console.log(movieCard) // найденная карточка в контейнере  с id  (например 29)
-    console.log(savedMovies) //сохраненная карточка - пустая при рендере
-    console.log(saved)  // 
-  }, []);
-
-  const saved = savedMovies.some(i => i.movieId === movieCard.id);
+  const saveButtonClassName = (
+    `movie-card__button ${ isSaved ? "movie-card__button_active" : "movie-card__button_inactive" }`
+  );
   
-  function handleDeleteMovie() {
-    onMovieDelete(movieCard)
-  }
-
   function handleMovieChangeStatus() {
-    onSaveMovies(movieCard, saved) // сохраняем карточку: если saved - ложь - POST, true - DELETE
-    setIsSaved(!isSaved);
-    console.log(saved) // верно - ложь что один элемент массива соответсвует условию - ключи movieId = id 
-    console.log(savedMovies) // сохраненные карточки с movieId
-   
-  }
+    onSaveMovies(movieCard) 
+  };
 
   function handleGetMovieDuration(mins) {
     let hours = Math.trunc(mins/60);
     let minutes = mins % 60;
     return `${ hours }ч ${ minutes }м`;
+  };
+
+  function handleDeleteMovie() {
+    onMovieDelete(movieCard)
   };
 
   return (
@@ -49,10 +41,7 @@ function MoviesCard( { movieCard, savedMovies, onSaveMovies, onMovieDelete } ) {
           ) : (
             <button
               type="button"
-              className={ isSaved
-                ? "movie-card__button movie-card__button_active"
-                : "movie-card__button movie-card__button_inactive"
-              }
+              className={ saveButtonClassName }
               onClick= { handleMovieChangeStatus }
             /> 
           )

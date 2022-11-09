@@ -40,7 +40,6 @@ function Movies( { movieCards, isLoading, setIsLoading, savedMovies, onSaveMovie
 
     if (foundMovies.length) {
       setFilteredMovies(shortMovies);
-      console.log(shortMovies)
       localStorage.setItem('checkbox', isChecked);
     } else {
       setError('Ничего не найдено');
@@ -52,7 +51,6 @@ function Movies( { movieCards, isLoading, setIsLoading, savedMovies, onSaveMovie
     if (foundMovies.length) {
       setFilteredMovies(foundMovies);
       localStorage.setItem('checkbox', isChecked);
-      console.log(foundMovies)
     } else {
       setError('Ничего не найдено');
       setFilteredMovies(null);
@@ -66,8 +64,6 @@ function Movies( { movieCards, isLoading, setIsLoading, savedMovies, onSaveMovie
       const foundMovies = movieCards.filter(data => {
         return data.nameRU.toLowerCase().includes(inputValueSearch.toLowerCase());
       });
-
-        console.log(foundMovies) // найденные фильмы в поиске
 
       if (foundMovies.length) {
         localStorage.setItem('searchedMovies', JSON.stringify(foundMovies));

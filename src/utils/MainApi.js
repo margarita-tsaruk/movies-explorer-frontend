@@ -10,7 +10,7 @@ class MainApi {
     } else { 
       return Promise.reject(`Ошибка: ${res.status}`); 
     } 
-  } 
+  }
 
   getToken() {
     return fetch(`${this.url}/users/me`, {
@@ -78,6 +78,10 @@ class MainApi {
       credentials: 'include',
     })
     .then(this._getServerResponse);
+  }
+
+  getData() {
+    return Promise.all([this.getUserInfo(), this.getSavedMovies()])
   }
 
   changeMovieStatus(movie, isSaved) {
