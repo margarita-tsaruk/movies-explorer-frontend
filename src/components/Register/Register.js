@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './Register.css';
 import Form from '../Form/Form';
 import logo from '../../images/logo.svg';
+import regularExpression from '../../utils/regularExpression';
 
 function Register( { onSignedUp } ) {
   const { values, handleChange, errors, isValid, resetErrors } = useForm({});
@@ -14,9 +15,10 @@ function Register( { onSignedUp } ) {
     </p>
   );
 
-  const buttonClass = {
-    buttonActive: "form__button",
-    buttonDisabled: "form__button_disabled",
+  const classNames = {
+    title: "form__title",
+    button: "form__button",
+    buttonActive: "form__button_active",
   }
 
   function handleSubmit(event) {
@@ -34,9 +36,9 @@ function Register( { onSignedUp } ) {
         name="register"
         title="Добро пожаловать!"
         buttonText="Зарегистрироваться"
-        buttonClass={ buttonClass }
+        classNames={ classNames }
         onSubmit={ handleSubmit }
-        isDisabled={ isValid }
+        isValid={ isValid }
         link={ link }
       >
         <fieldset className="form__fieldset">
@@ -49,6 +51,7 @@ function Register( { onSignedUp } ) {
             placeholder="Имя"
             minLength="2"
             maxLength="40"
+            pattern={ regularExpression }
             required
             value={ values.name || '' }
             onChange={ handleChange } />

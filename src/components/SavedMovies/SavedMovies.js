@@ -32,8 +32,6 @@ function SavedMovies( { savedMovies, onSaveMovies, onMovieDelete }) {
       });
       if (shortMovies) {
         setSearchedSavedMovies(shortMovies);
-        
-        console.log('works')
       } else {
         setError('Ничего не найдено');
         setSearchedSavedMovies(null);

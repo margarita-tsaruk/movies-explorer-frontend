@@ -9,7 +9,7 @@ function Movies( { movieCards, isLoading, setIsLoading, savedMovies, onSaveMovie
   const [ filteredMovies, setFilteredMovies ] = useState(null);
   const [ searchedMovies, setSearchedMovies ] = useState([]);
   const [ input, setInput ] = useState('');
-  const [ error, setError ] = useState('Enter');
+  const [ error, setError ] = useState('');
   
   useEffect(() => {  
     const searchedMovies = localStorage.getItem('searchedMovies');
@@ -58,7 +58,7 @@ function Movies( { movieCards, isLoading, setIsLoading, savedMovies, onSaveMovie
   }
 
   function handleSearchMovies(inputValueSearch, isChecked) {
-    setIsLoading(true)
+    setIsLoading(true);
     
     try {
       const foundMovies = movieCards.filter(data => {
@@ -77,6 +77,7 @@ function Movies( { movieCards, isLoading, setIsLoading, savedMovies, onSaveMovie
         handleCheckboxOff(foundMovies, inputValueSearch, isChecked);
       }
     } catch (err) {
+      console.log(err);
       setError('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
     } finally {
       setTimeout(()=> setIsLoading(false), 500)
@@ -88,6 +89,7 @@ function Movies( { movieCards, isLoading, setIsLoading, savedMovies, onSaveMovie
       const shortMovies = searchedMovies.filter(data => {
         return data.duration <= 40
       });
+      
       setFilteredMovies(shortMovies);
       localStorage.setItem('checkbox', isChecked);
     } else {

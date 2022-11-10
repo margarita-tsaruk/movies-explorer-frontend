@@ -7,13 +7,45 @@ function Profile( { isLoggedIn, onUpdateUserData, onSignOut } ) {
   const currentUser = useContext(CurrentUserContext);
   const { values, handleChange, errors, isValid, resetErrors, setValues } = useForm({});
   const [ isEditedOn, setIsEditedOn ] = useState(false);
+  const [ isSaved, setIsSaved ] = useState(false);
+  const [ name, setName ] = useState(false);
+  const [ email, setEmail ] = useState(false);
 
   useEffect(() => {
     if(isLoggedIn) {
       resetErrors();
+      console.log(currentUser)
       setValues({ name: currentUser.name, email: currentUser.email });
     }
   }, [currentUser, isLoggedIn]);
+
+  useEffect(() => {
+    if (currentUser.name !== values.name) {
+      setName(true);
+    } else {
+      setName(false);
+    }
+    if (currentUser.email !== values.email) {
+      setEmail(true);
+    } else {
+      setEmail(false);
+    }
+  }, [values]);
+
+  useEffect(() => {
+    console.log(name)
+    console.log(isValid)
+    if (name && isValid) {
+      setIsSaved(false);
+    } else {
+      setIsSaved(true);
+    }
+    if (email && isValid) {
+      setIsSaved(false);
+    } else {
+      setIsSaved(true);
+    }
+  }, [currentUser.email, currentUser.name, values]);
 
   function handleEditClick() {
     setIsEditedOn(!isEditedOn);
@@ -72,7 +104,14 @@ function Profile( { isLoggedIn, onUpdateUserData, onSignOut } ) {
               <button className="profile__sign-out-link" onClick={ onSignOut }> Выйти из аккаунта</button>
             </>
           ) : (
-            <button type="submit" className="profile__save-button" onClick={ handleSubmit }>Сохранить</button>
+            <button 
+              type="submit" 
+              className={`profile__save-button ${ !isSaved && "profile__save-button_active"}`} 
+              onClick={ handleSubmit }
+              disabled={ isSaved }
+            >
+              Сохранить
+            </button>
           )
         }
     </main>

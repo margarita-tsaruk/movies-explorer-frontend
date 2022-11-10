@@ -130,6 +130,15 @@
   margin: 220px 0 0;
   width: 410px;
   height: 46px;
+  color: rgba(0, 0, 0, .1);
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, .1);
+  border-radius: 2px;
+  cursor: default;
+  
+}
+
+.profile__save-button_active {
   background-color: #3456F3;
   color: #fff;
   border-radius: 3px;
@@ -195,4 +204,4 @@
     font-size: 12px;
     line-height: 15px;
   }
-}
+} 

@@ -1,14 +1,14 @@
 import './Form.css';
 
-function Form( { name, onSubmit, title, children, buttonText, isDisabled, link, buttonClass } ) {
+function Form( { name, onSubmit, title, children, buttonText, isValid, link, classNames } ) {
   return (
     <form  className={ `form form_type_${name}` } onSubmit={ onSubmit }>
-      <h3 className="form__title">{ title }</h3>
+      <h3 className={`${classNames.title}`}>{ title }</h3>
       { children }
       <button 
         type="submit" 
-        className={`${buttonClass.buttonActive} ${!isDisabled ? buttonClass.buttonDisabled : ''}`}
-        disabled={ !isDisabled }
+        className={`${classNames.button} ${ isValid && classNames.buttonActive }`}
+        disabled={ !isValid }
       >
         { buttonText }
       </button>

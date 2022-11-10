@@ -8,9 +8,10 @@ export function useForm() {
   
     const handleChange = (event) => {
       const {value, name} = event.target;
+  
       setValues({...values, [name]: value});
       setErrors({ ...errors, [name]: event.target.validationMessage });
-      setIsValid(event.target.checkValidity());
+      setIsValid(event.target.closest("form").checkValidity());
     };
 
     function resetErrors() {

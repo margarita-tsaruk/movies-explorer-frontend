@@ -47,15 +47,6 @@ class MainApi {
     .then(this._getServerResponse)
   }
 
-  getUserInfo() {
-    return fetch (`${this.url}/users/me`, {
-      method: 'GET',
-      headers: this.headers,
-      credentials: 'include',
-    })
-    .then(this._getServerResponse)
-  }
-
   updateUserInfo(name, email) {
     return fetch (`${this.url}/users/me`, {
       headers: this.headers,
@@ -81,7 +72,7 @@ class MainApi {
   }
 
   getData() {
-    return Promise.all([this.getUserInfo(), this.getSavedMovies()])
+    return Promise.all([this.getToken(), this.getSavedMovies()])
   }
 
   changeMovieStatus(movie, isSaved) {
@@ -143,7 +134,7 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-  url: 'http://localhost:4000',
+  url: 'https://api.movies-explorer.m-ts.nomoredomains.icu',
   headers: {
     'Content-Type': 'application/json'
   }

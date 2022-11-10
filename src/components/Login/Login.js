@@ -14,16 +14,15 @@ function Login( { onSignedUp } ) {
     </p>
   );
   
-  const buttonClass = {
-    buttonActive: "form__button form__button_login",
-    buttonDisabled: "form__button_disabled"
+  const classNames = {
+    title: "form__title",
+    button: "form__button form__button_login",
+    buttonActive: "form__button_active",
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-        
     onSignedUp( {...values} );
-
     resetErrors();
   }
 
@@ -36,9 +35,9 @@ function Login( { onSignedUp } ) {
         name="login"
         title="Рады видеть!"
         buttonText="Войти"
-        buttonClass={ buttonClass }
+        classNames={ classNames }
         onSubmit={ handleSubmit }
-        isDisabled={ isValid }
+        isValid={ isValid }
         link={ link }
       >
         <fieldset className="form__fieldset">
@@ -51,6 +50,7 @@ function Login( { onSignedUp } ) {
             placeholder="E-mail"
             minLength="2"
             maxLength="40"
+          
             required
             value={ values.email || '' }
             onChange={ handleChange } />

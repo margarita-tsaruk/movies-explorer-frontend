@@ -1,26 +1,19 @@
-import LoggedIn from '../../images/LoggedIn.svg';
-import NotLoggedIn from '../../images/NotLoggedIn.svg';
 import './InfoToolTip.css';
 
-function InfoTooltip( { isPopupOpened, onClose, isLoggedIn } ) {
+function InfoTooltip( { isPopupOpened, popupTitle, onClose } ) {
     
   return (
-    <div className={`popup popup_type_info ${ isPopupOpened && 'popup_visible'}`}>
-      <div className={`popup__content popup__content_info`}>
+    <div className={`popup ${ isPopupOpened && 'popup_visible'}`}>
+      <div className="popup__content">
         <button 
           className="popup__close-button" 
           type="button"
           onClick={ onClose }
         >
         </button>
-        <img
-          className="popup__registration-image"
-          src={ isLoggedIn ? LoggedIn : NotLoggedIn }
-          alt={ isLoggedIn ? 'Вы успешно зарегистрировались!' : 'Что-то пошло не так! Попробуйте ещё раз.' }
-        />
         <h3 
-          className="popup__title popup__title_info">
-          { isLoggedIn ? 'Вы успешно зарегистрировались!' : 'Что-то пошло не так! Попробуйте ещё раз.' }
+          className="popup__title">
+          { popupTitle }
         </h3>
       </div>
     </div>

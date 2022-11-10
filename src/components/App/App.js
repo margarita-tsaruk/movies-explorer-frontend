@@ -28,16 +28,18 @@ function App() {
   const [ movieCards, setMovieCards ] = useState([]);
   const [ savedMovies, setSavedMovies ] = useState([]);
   const [ isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen ] = useState(false);
+  const [ popupTitle, setPopupTitle ] = useState('');
   
   function handleInfoTooltip() {
     setIsInfoTooltipPopupOpen(true);
   }
 
   function handleCheckToken() {
-    mainApi.getToken()
-      .then((data) => {
+    mainApi.getData()
+      .then(([userData, moviesData]) => {
+        setCurrentUser(userData);
+        setSavedMovies(moviesData);
         setIsLoggedIn(true);
-        setCurrentUser(data);
         history.push('/movies');
       })
       .catch((err) => {
@@ -55,49 +57,50 @@ function App() {
     }
   }, []);
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      mainApi.getData()
-        .then(([userData, moviesData]) => {
-          setCurrentUser(userData);
-          setSavedMovies(moviesData);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-    }
-  }, [isLoggedIn])
+  function handleGetMovies() {
+    moviesApi.getMovies()
+      .then((movies) => {
+        setMovieCards(movies);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   function handleAuthorization(userData) {
     mainApi.authorize(userData)
     .then((userData) => {
-      localStorage.setItem('loggedIn', true);
-      setCurrentUser(userData.data);
-      setIsLoggedIn(true);
-      history.push('/movies');
-      handleInfoTooltip();
+      if (userData) {
+        localStorage.setItem('loggedIn', true);
+        handleCheckToken();
+        handleGetMovies();
+        setIsLoggedIn(true);
+        history.push('/movies');
+        handleInfoTooltip();
+        setPopupTitle('Вы успешно зарегистрировались');
+      }
     })
     .catch((err) => {
       console.log(err);
       setIsLoggedIn(false);
       handleInfoTooltip();
+      setPopupTitle('Что-то пошло не так, попробуйте еще раз!');
     })
   }
 
   function handleRegistration(userData) {
-    setIsLoading(true);
     mainApi.register(userData)
-    .then((userData) => {
-      handleAuthorization(userData); 
+    .then((newUserData) => {
+      if (newUserData) {
+        handleAuthorization(userData);
+      }
     })
     .catch((err) => {
       console.log(err);
       setIsLoggedIn(false);
       handleInfoTooltip();
+      setPopupTitle('Что-то пошло не так, попробуйте ещё раз!');
     })
-    .finally(() => {
-      setIsLoading(false);
-    });
   }
 
   function handleUpdateUserInfo(userData) {
@@ -110,9 +113,13 @@ function App() {
           email: newUser.email,
         }
       })
+      handleInfoTooltip();
+      setPopupTitle('Профайл успешно обновлен');
     })
     .catch((err) => {
       console.log(err);
+      handleInfoTooltip();
+      setPopupTitle('Что-то пошло не так, попробуйте ещё раз!');
     })
     .finally(() => {
       setIsLoading(false);
@@ -126,18 +133,6 @@ function App() {
   function closePopup() {
     setIsInfoTooltipPopupOpen(false);
   }
-
-  useEffect(() => {
-    if(isLoggedIn) {
-      moviesApi.getMovies()
-        .then((movies) => {
-          setMovieCards(movies);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-    }
-  }, [isLoggedIn])
 
   function handleGetSavedMovies() {
     mainApi.getSavedMovies()
@@ -154,10 +149,8 @@ function App() {
     mainApi.changeMovieStatus(movie, isSaved) 
       .then((newMovie) => {
         handleGetSavedMovies()
-        console.log(movie)
         setSavedMovies(savedMovies.map((savedMovie) => 
           savedMovie.movieId === movie.id ? newMovie : savedMovie));
-        console.log(newMovie)
       })
       .catch((err) => {
         console.log(err);
@@ -181,6 +174,9 @@ function App() {
       setIsLoggedIn(false);
       setCurrentUser({});
       localStorage.removeItem('loggedIn');
+      localStorage.removeItem('searchedMovies');
+      localStorage.removeItem('inputSearch');
+      localStorage.removeItem('checkbox');
       history.push('/');
     })
     .catch((err) => {
@@ -249,6 +245,7 @@ function App() {
         }
         <InfoTooltip
           isPopupOpened={ isInfoTooltipPopupOpen }
+          popupTitle={popupTitle}
           onClose={ closePopup }
           isLoggedIn={ isLoggedIn }
         />

@@ -4,7 +4,6 @@ class MoviesApi {
     this.headers = headers;
   }
   
-  //Объявление приватного метода: получение ответа от сервера
   _getServerResponse(res) {
     if(res.ok) { 
       return res.json(); 
@@ -13,12 +12,10 @@ class MoviesApi {
     } 
   } 
   
-  //Объявление публичного метода: отправить запрос серверу - загрузить карточки
   getMovies() {
     return fetch (this.url, {
       method: 'GET',
       headers: this.headers,
-      //credentials: 'include',
     })
     .then(this._getServerResponse)
   }

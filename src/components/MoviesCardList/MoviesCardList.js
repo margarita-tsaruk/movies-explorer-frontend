@@ -31,7 +31,7 @@ function MoviesCardList( { filteredMovies, onSaveMovies, savedMovies, onMovieDel
       setCountMovies(2);
     } else if (windowWidth < 719 && windowWidth >= 280) {
       setRenderedMovies(5)
-      setCountMovies(1);
+      setCountMovies(2);
     }
   } 
 
@@ -78,7 +78,6 @@ function MoviesCardList( { filteredMovies, onSaveMovies, savedMovies, onMovieDel
   useEffect(() => {
     if (pathname === '/saved-movies') {
       setAddedMovies(savedMovies);
-    //  console.log(savedMovies)
       setIsButtonMoreOn(false);
     }
   }, [savedMovies]);

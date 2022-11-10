@@ -4,6 +4,9 @@ import './SearchForm.css';
 
 function SearchForm( { onSearchMovies, onCheckbox, isChecked, input, errоr } ) {
   const { values, isValid, handleChange, resetErrors, setValues } = useForm({});
+  const checkButtonClassName = (
+    `search__form__checkbox ${ !isChecked ? "search__form__checkbox_on" : "search__form__checkbox_off" }`
+  );
 
   useEffect(() => {
     setValues( { search: input } );
@@ -45,10 +48,7 @@ function SearchForm( { onSearchMovies, onCheckbox, isChecked, input, errоr } ) 
               value={ isChecked }
               onChange={ onCheckbox }
             />
-              <span className={ 
-                !isChecked 
-                ? "search__form__checkbox search__form__checkbox_on" 
-                : "search__form__checkbox search__form__checkbox_off" }/>
+              <span className={ checkButtonClassName }/>
           </label>
           <p className="search__form__info">Короткометражки</p>
         </div>
