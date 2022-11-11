@@ -21,4 +21,3 @@ function InfoTooltip( { isPopupOpened, popupTitle, onClose } ) {
 }
   
 export default InfoTooltip;
-  

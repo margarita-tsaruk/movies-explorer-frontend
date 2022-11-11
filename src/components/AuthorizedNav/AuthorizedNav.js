@@ -2,7 +2,7 @@ import { Switch, Route, Link } from 'react-router-dom';
 import { useState } from 'react';
 import './AuthorizedNav.css';
 
-function AuthorizedNav( { isLoggedIn, onChangeMenu }) {
+function AuthorizedNav( { isLoggedIn, onChangeMenu } ) {
   const [isClicked, setIsClicked] = useState(false);
 
   function handleClick() {

@@ -19,7 +19,7 @@ function Register( { onSignedUp } ) {
     title: "form__title",
     button: "form__button",
     buttonActive: "form__button_active",
-  }
+  };
 
   function handleSubmit(event) {
     event.preventDefault();

@@ -23,7 +23,6 @@
   opacity: .7;
 }
 
-
 .nav__auth__login {
   display: flex;
   justify-content: center;
@@ -61,4 +60,3 @@
     height: 26px;
   }
 }
-

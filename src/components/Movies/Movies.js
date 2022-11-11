@@ -96,6 +96,7 @@ function Movies( { movieCards, isLoading, setIsLoading, savedMovies, onSaveMovie
       const longMovies = searchedMovies.filter(data => {
         return data.duration > 40
       });
+
       setFilteredMovies(longMovies);
       localStorage.setItem('checkbox', isChecked);
     }
@@ -114,8 +115,9 @@ function Movies( { movieCards, isLoading, setIsLoading, savedMovies, onSaveMovie
         input={ input }
         errоr={ setError }
       />
-      { filteredMovies ? (
-        isLoading 
+      { filteredMovies 
+        ? (
+          isLoading 
           ? ( 
             <Preloader />
           ) : (

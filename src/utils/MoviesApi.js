@@ -1,5 +1,5 @@
 class MoviesApi {
-  constructor({ url, headers }) {
+  constructor( { url, headers } ) {
     this.url = url;
     this.headers = headers;
   }
@@ -8,7 +8,7 @@ class MoviesApi {
     if(res.ok) { 
       return res.json(); 
     } else { 
-      return Promise.reject(`Ошибка: ${res.status}`); 
+      return Promise.reject(`Ошибка: ${ res.status }`); 
     } 
   } 
   

@@ -160,12 +160,12 @@ function App() {
   function handleMovieDelete(movie) {
     mainApi.deleteSavedMovie(movie)
     .then(() => {
-        handleGetSavedMovies()
-        setSavedMovies((state) => state.filter((movie) => movie.movieId !== movie.id));
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+      handleGetSavedMovies()
+      setSavedMovies((state) => state.filter((movie) => movie.movieId !== movie.id));
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
   function handleSignOut() {

@@ -139,5 +139,5 @@ const mainApi = new MainApi({
     'Content-Type': 'application/json'
   }
 });
-  
+
 export default mainApi;

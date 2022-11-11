@@ -1,6 +1,5 @@
 import { useForm } from '../../hooks/useForm';
 import { Link } from 'react-router-dom';
-import './Login.css';
 import Form from '../Form/Form';
 import logo from '../../images/logo.svg';
 
@@ -18,7 +17,7 @@ function Login( { onSignedUp } ) {
     title: "form__title",
     button: "form__button form__button_login",
     buttonActive: "form__button_active",
-  }
+  };
 
   function handleSubmit(event) {
     event.preventDefault();

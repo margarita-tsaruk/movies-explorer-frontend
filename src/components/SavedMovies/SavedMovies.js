@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react';
-import './SavedMovies.css';
 import SearchForm from '../SearchForm/SearchForm.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-function SavedMovies( { savedMovies, onSaveMovies, onMovieDelete }) {
+function SavedMovies( { savedMovies, onSaveMovies, onMovieDelete } ) {
   const [ searchedSavedMovies, setSearchedSavedMovies ] = useState([]);
   const [ error, setError ] = useState('');
   const [ isChecked, setIsChecked ] = useState(false);
 
-  useEffect(() => {   
+  useEffect(() => {
     setSearchedSavedMovies(savedMovies);
   }, [savedMovies]);
 
