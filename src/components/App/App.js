@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Route, Switch, useLocation, useHistory} from 'react-router-dom';
+import { Route, Switch, useLocation, useHistory, Redirect } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -39,7 +39,6 @@ function App() {
       .then((data) => {
         setCurrentUser(data);
         setIsLoggedIn(true);
-        history.push('/movies');
       })
       .catch((err) => {
         console.log(err);
@@ -73,7 +72,7 @@ function App() {
         .then(([userData, moviesData]) => {
           setCurrentUser(userData);
           setSavedMovies(moviesData);
-          //handleGetMovies();
+          handleGetMovies();
         })
         .catch((err) => {
           console.log(err);
@@ -213,13 +212,19 @@ function App() {
           <Route exact path="/">
             <Main isLoggedIn={ isLoggedIn } />
           </Route>
-          <Route exact path="/signup">
-            <Register 
-            onSignedUp={ handleRegistration } />
+          <Route path="/signup">
+          { isLoggedIn 
+            ? <Redirect to="/" />
+            : <Register 
+                onSignedUp={ handleRegistration } />
+            }
           </Route>
-          <Route exact path="/signin">
-            <Login 
-            onSignedUp={ handleAuthorization } />
+          <Route path="/signin">
+            { isLoggedIn 
+            ? <Redirect to="/" />
+            : <Login 
+                onSignedUp={ handleAuthorization } />
+            }
           </Route>
           <ProtectedRoute 
             path="/movies"
