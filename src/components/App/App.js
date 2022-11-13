@@ -35,10 +35,9 @@ function App() {
   }
 
   function handleCheckToken() {
-    mainApi.getData()
-      .then(([userData, moviesData]) => {
-        setCurrentUser(userData);
-        setSavedMovies(moviesData);
+    mainApi.getToken()
+      .then((data) => {
+        setCurrentUser(data);
         setIsLoggedIn(true);
         history.push('/movies');
       })
@@ -57,10 +56,24 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      mainApi.getData()
+        .then(([userData, moviesData]) => {
+          setCurrentUser(userData);
+          setSavedMovies(moviesData);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
+  }, [isLoggedIn])
+
   function handleGetMovies() {
     moviesApi.getMovies()
       .then((movies) => {
         setMovieCards(movies);
+        console.log(movies)
       })
       .catch((err) => {
         console.log(err);
@@ -77,7 +90,7 @@ function App() {
         setIsLoggedIn(true);
         history.push('/movies');
         handleInfoTooltip();
-        setPopupTitle('Вы успешно зарегистрировались');
+        setPopupTitle('Вы успешно вошли в приложение!');
       }
     })
     .catch((err) => {
