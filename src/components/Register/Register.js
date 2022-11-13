@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './Register.css';
 import Form from '../Form/Form';
 import logo from '../../images/logo.svg';
-import regularExpression from '../../utils/regularExpression';
+import { regularExpressionName, regularExpressionEmail } from '../../utils/regularExpression';
 
 function Register( { onSignedUp } ) {
   const { values, handleChange, errors, isValid, resetErrors } = useForm({});
@@ -51,7 +51,7 @@ function Register( { onSignedUp } ) {
             placeholder="Имя"
             minLength="2"
             maxLength="40"
-            pattern={ regularExpression }
+            pattern={ regularExpressionName }
             required
             value={ values.name || '' }
             onChange={ handleChange } />
@@ -63,6 +63,7 @@ function Register( { onSignedUp } ) {
             id="email-input"
             type="email"
             name="email"
+            pattern={ regularExpressionEmail }
             className={`form__input ${ errors.email && 'form__input_type_invalid'}` }
             placeholder="E-mail"
             minLength="2"

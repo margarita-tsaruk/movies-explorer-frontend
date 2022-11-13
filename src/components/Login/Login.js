@@ -2,6 +2,7 @@ import { useForm } from '../../hooks/useForm';
 import { Link } from 'react-router-dom';
 import Form from '../Form/Form';
 import logo from '../../images/logo.svg';
+import { regularExpressionEmail } from '../../utils/regularExpression';
 
 function Login( { onSignedUp } ) {
   const { values, handleChange, errors, isValid, resetErrors } = useForm({});
@@ -49,8 +50,8 @@ function Login( { onSignedUp } ) {
             placeholder="E-mail"
             minLength="2"
             maxLength="40"
-          
             required
+            pattern={ regularExpressionEmail }
             value={ values.email || '' }
             onChange={ handleChange } />
           <span className="form__error form__error_top" id="input-email-error">

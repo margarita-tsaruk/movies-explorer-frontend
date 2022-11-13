@@ -73,7 +73,7 @@ function App() {
         .then(([userData, moviesData]) => {
           setCurrentUser(userData);
           setSavedMovies(moviesData);
-          handleGetMovies();
+          //handleGetMovies();
         })
         .catch((err) => {
           console.log(err);
@@ -133,7 +133,7 @@ function App() {
     .catch((err) => {
       console.log(err);
       handleInfoTooltip();
-      setPopupTitle('Что-то пошло не так, попробуйте ещё раз!');
+      setPopupTitle('Ошибка обновления профиля! Введите имя или email в правильном формате!');
     })
     .finally(() => {
       setIsLoading(false);

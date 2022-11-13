@@ -2,50 +2,26 @@ import { useForm } from '../../hooks/useForm';
 import { useContext, useState, useEffect } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import './Profile.css';
+import { regularExpressionEmail } from '../../utils/regularExpression';
 
 function Profile( { isLoggedIn, onUpdateUserData, onSignOut } ) {
   const currentUser = useContext(CurrentUserContext);
   const { values, handleChange, errors, isValid, resetErrors, setValues } = useForm({});
   const [ isEditedOn, setIsEditedOn ] = useState(false);
-  const [ isSaved, setIsSaved ] = useState(false);
-  const [ name, setName ] = useState(false);
-  const [ email, setEmail ] = useState(false);
 
   useEffect(() => {
     if(isLoggedIn) {
       resetErrors();
-      console.log(currentUser)
       setValues({ name: currentUser.name, email: currentUser.email });
+      console.log(currentUser)
     }
   }, [currentUser, isLoggedIn]);
 
-  useEffect(() => {
-    if (currentUser.name !== values.name) {
-      setName(true);
-    } else {
-      setName(false);
-    }
-    if (currentUser.email !== values.email) {
-      setEmail(true);
-    } else {
-      setEmail(false);
-    }
-  }, [values]);
-
-  useEffect(() => {
-    console.log(name)
-    console.log(isValid)
-    if (name && isValid) {
-      setIsSaved(false);
-    } else {
-      setIsSaved(true);
-    }
-    if (email && isValid) {
-      setIsSaved(false);
-    } else {
-      setIsSaved(true);
-    }
-  }, [currentUser.email, currentUser.name, values]);
+  function handleCheckData() {
+    const isSameData = currentUser.name === values.name && currentUser.email === values.email;
+    console.log(isSameData);
+    return isSameData;
+  }
 
   function handleEditClick() {
     setIsEditedOn(!isEditedOn);
@@ -87,6 +63,7 @@ function Profile( { isLoggedIn, onUpdateUserData, onSignOut } ) {
               name="email"
               className="profile__input"
               placeholder="Email"
+              pattern={ regularExpressionEmail }
               required
               value={ values.email || '' }
               onChange={handleChange}
@@ -106,9 +83,9 @@ function Profile( { isLoggedIn, onUpdateUserData, onSignOut } ) {
           ) : (
             <button 
               type="submit" 
-              className={`profile__save-button ${ !isSaved && "profile__save-button_active"}`} 
+              className={`profile__save-button ${ isValid && "profile__save-button_active"}`} 
               onClick={ handleSubmit }
-              disabled={ isSaved }
+              disabled={ !isValid || handleCheckData()}
             >
               Сохранить
             </button>
