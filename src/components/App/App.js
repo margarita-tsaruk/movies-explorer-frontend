@@ -56,19 +56,6 @@ function App() {
     }
   }, []);
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      mainApi.getData()
-        .then(([userData, moviesData]) => {
-          setCurrentUser(userData);
-          setSavedMovies(moviesData);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-    }
-  }, [isLoggedIn])
-
   function handleGetMovies() {
     moviesApi.getMovies()
       .then((movies) => {
@@ -79,6 +66,20 @@ function App() {
         console.log(err);
       });
   }
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      mainApi.getData()
+        .then(([userData, moviesData]) => {
+          setCurrentUser(userData);
+          setSavedMovies(moviesData);
+          handleGetMovies();
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
+  }, [isLoggedIn])
 
   function handleAuthorization(userData) {
     mainApi.authorize(userData)

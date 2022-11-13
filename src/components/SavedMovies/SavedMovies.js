@@ -7,9 +7,9 @@ function SavedMovies( { savedMovies, onSaveMovies, onMovieDelete } ) {
   const [ error, setError ] = useState('');
   const [ isChecked, setIsChecked ] = useState(false);
 
-  useEffect(() => {
-    setSearchedSavedMovies(savedMovies);
-  }, [savedMovies]);
+  // useEffect(() => {
+  //   setSearchedSavedMovies(savedMovies);
+  // }, [savedMovies]);
 
   function handleCheck() {
     setIsChecked(!isChecked);
@@ -60,7 +60,7 @@ function SavedMovies( { savedMovies, onSaveMovies, onMovieDelete } ) {
         onCheckbox={ handleCheck }
         isChecked={ isChecked }
       />
-      { searchedSavedMovies 
+      { savedMovies 
       ? (
           <MoviesCardList 
             savedMovies={ searchedSavedMovies }
