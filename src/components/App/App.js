@@ -166,6 +166,7 @@ function App() {
     .then((res) => {
       setIsLoggedIn(false);
       setCurrentUser({});
+      localStorage.removeItem('movies');
       localStorage.removeItem('loggedIn');
       localStorage.removeItem('searchedMovies');
       localStorage.removeItem('inputSearch');
