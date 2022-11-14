@@ -39,7 +39,6 @@ function Movies( { isLoading, setIsLoading, savedMovies, onSaveMovies } ) {
     });
 
     if (foundMovies.length) {
-      console.log(foundMovies.length)
       setFilteredMovies(shortMovies);
       localStorage.setItem('checkbox', isChecked);
     } else {
@@ -50,7 +49,6 @@ function Movies( { isLoading, setIsLoading, savedMovies, onSaveMovies } ) {
 
   function handleCheckboxOff(foundMovies, isChecked) {
     if (foundMovies.length) {
-      console.log(foundMovies.length)
       setFilteredMovies(foundMovies);
       localStorage.setItem('checkbox', isChecked);
     } else {

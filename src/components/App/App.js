@@ -34,17 +34,13 @@ function App() {
   }
 
   function handleCheckToken() {
-    mainApi.getToken()
-      .then((data) => {
-        setCurrentUser(data);
-        setIsLoggedIn(true);
-      })
+    mainApi.getData()
+    .then(([userData, moviesData]) => {
+      setCurrentUser(userData);
+      setSavedMovies(moviesData);
+    })
       .catch((err) => {
         console.log(err);
-        localStorage.removeItem('loggedIn');
-        localStorage.removeItem('searchedMovies');
-        localStorage.removeItem('inputSearch');
-        localStorage.removeItem('checkbox');
       })
   } 
 
@@ -63,19 +59,6 @@ function App() {
         console.log(err);
       });
   }
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      mainApi.getData()
-        .then(([userData, moviesData]) => {
-          setCurrentUser(userData);
-          setSavedMovies(moviesData);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-    }
-  }, [isLoggedIn])
 
   function handleAuthorization(userData) {
     mainApi.authorize(userData)
