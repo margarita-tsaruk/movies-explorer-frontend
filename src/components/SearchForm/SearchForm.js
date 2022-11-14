@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import './SearchForm.css';
 
 function SearchForm( { onSearchMovies, onCheckbox, isChecked, input, errоr } ) {
-  const { values, isValid, handleChange, resetErrors, setValues } = useForm({});
+  const { values, isValid, handleChange, setValues } = useForm({});
   const checkButtonClassName = (
     `search__form__checkbox ${ !isChecked ? "search__form__checkbox_on" : "search__form__checkbox_off" }`
   );
@@ -16,7 +16,6 @@ function SearchForm( { onSearchMovies, onCheckbox, isChecked, input, errоr } ) 
     e.preventDefault();
     if (isValid) {
       onSearchMovies(values.search, isChecked);
-      resetErrors();
     } else {
       errоr('Нужно ввести ключевое слово')
     }

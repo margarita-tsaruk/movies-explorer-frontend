@@ -13,7 +13,6 @@ function Profile( { isLoggedIn, onUpdateUserData, onSignOut } ) {
     if(isLoggedIn) {
       resetErrors();
       setValues({ name: currentUser.name, email: currentUser.email });
-      console.log(currentUser)
     }
   }, [currentUser, isLoggedIn]);
 

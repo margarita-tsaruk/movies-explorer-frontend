@@ -4,12 +4,12 @@ import SearchForm from '../SearchForm/SearchForm.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 
-function Movies( { movieCards, isLoading, setIsLoading, savedMovies, onSaveMovies } ) {
+function Movies( { isLoading, setIsLoading, savedMovies, onSaveMovies } ) {
   const [ isChecked, setIsChecked ] = useState(false);
   const [ filteredMovies, setFilteredMovies ] = useState(null);
   const [ searchedMovies, setSearchedMovies ] = useState([]);
   const [ input, setInput ] = useState('');
-  const [ error, setError ] = useState('');
+  const [ error, setError ] = useState('Введите название фильма в поиск');
   
   useEffect(() => {  
     const searchedMovies = localStorage.getItem('searchedMovies');
@@ -19,7 +19,7 @@ function Movies( { movieCards, isLoading, setIsLoading, savedMovies, onSaveMovie
     }
 
     const checkbox = localStorage.getItem('checkbox');
-    if (checkbox === 'true') {
+    if (checkbox) {
       setIsChecked(true);
     }
 
@@ -61,9 +61,10 @@ function Movies( { movieCards, isLoading, setIsLoading, savedMovies, onSaveMovie
 
   function handleSearchMovies(inputValueSearch, isChecked) {
     setIsLoading(true);
-    console.log(movieCards)
+    const movies = JSON.parse(localStorage.getItem('movies'));
+   
     try {
-      const foundMovies = movieCards.filter(data => {
+      const foundMovies = movies.filter(data => {
         return data.nameRU.toLowerCase().includes(inputValueSearch.toLowerCase());
       });
 

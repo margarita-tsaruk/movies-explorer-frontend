@@ -25,7 +25,7 @@ function App() {
   const [ isMenuOpen, setIsMenuOpen ] = useState(false);
   const [ currentUser, setCurrentUser ] = useState({});
   const [ isLoading, setIsLoading ] = useState(false);
-  const [ movieCards, setMovieCards ] = useState([]);
+  //const [ movieCards, setMovieCards ] = useState([]);
   const [ savedMovies, setSavedMovies ] = useState([]);
   const [ isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen ] = useState(false);
   const [ popupTitle, setPopupTitle ] = useState('');
@@ -58,8 +58,7 @@ function App() {
   function handleGetMovies() {
     moviesApi.getMovies()
       .then((movies) => {
-        setMovieCards(movies);
-        console.log(movies)
+        localStorage.setItem('movies', JSON.stringify(movies));
       })
       .catch((err) => {
         console.log(err);
@@ -72,7 +71,6 @@ function App() {
         .then(([userData, moviesData]) => {
           setCurrentUser(userData);
           setSavedMovies(moviesData);
-          handleGetMovies();
         })
         .catch((err) => {
           console.log(err);
@@ -230,7 +228,7 @@ function App() {
             path="/movies"
             isLoggedIn={ isLoggedIn }
             component={ Movies } 
-            movieCards={ movieCards }
+            //movieCards={ movieCards }
             isLoading={ isLoading }
             setIsLoading={ setIsLoading }
             savedMovies={ savedMovies }

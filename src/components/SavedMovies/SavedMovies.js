@@ -8,50 +8,51 @@ function SavedMovies( { savedMovies, onSaveMovies, onMovieDelete } ) {
   const [ isChecked, setIsChecked ] = useState(false);
 
   useEffect(() => {
+    setIsChecked(!isChecked);
     setSearchedSavedMovies(savedMovies);
   }, [savedMovies]);
+
+  useEffect(() => {
+    !isChecked ? handleCheckboxOn(searchedSavedMovies) :setSearchedSavedMovies(savedMovies);
+  }, [isChecked]);
 
   function handleCheck() {
     setIsChecked(!isChecked);
   }
 
-  function handleSearchMovies(inputValueSearch) {
-    console.log(savedMovies)
-    const foundMovies = savedMovies.filter(data => {
-      return data.nameRU.toLowerCase().includes(inputValueSearch.toLowerCase());
+  function handleCheckboxOn(foundMovies) {
+    const shortMovies = foundMovies.filter(data => {
+      return data.duration <= 40
     });
 
-    setSearchedSavedMovies(foundMovies)
-  }
-
-  function handleFilterShortMovies(savedMovies, isChecked) {
-    if (!isChecked) {
-      const shortMovies = savedMovies.filter(data => {
-        return data.duration <= 40
-      });
-      if (shortMovies) {
-        setSearchedSavedMovies(shortMovies);
-      } else {
-        setError('Ничего не найдено');
-        setSearchedSavedMovies(null);
-      }
+    if (foundMovies.length) {
+      setSearchedSavedMovies(shortMovies);
     } else {
-      const longMovies = savedMovies.filter(data => {
-        return data.duration > 40
-      });
-      if (longMovies) {
-        setSearchedSavedMovies(longMovies);
-       
-      } else {
-        setError('Ничего не найдено');
-        setSearchedSavedMovies(null);
-      };
+      setError('Ничего не найдено');
+      setSearchedSavedMovies(null);
     }
   }
 
-  useEffect(() => {
-    handleFilterShortMovies(savedMovies, isChecked)
-  }, [isChecked])
+  function handleCheckboxOff(foundMovies) {
+    if (foundMovies.length) {
+      setSearchedSavedMovies(foundMovies);
+    } else {
+      setError('Ничего не найдено');
+      setSearchedSavedMovies(null);
+    }
+  }
+  
+  function handleSearchMovies(inputValueSearch) {
+    const foundMovies = searchedSavedMovies.filter(data => {
+      return data.nameRU.toLowerCase().includes(inputValueSearch.toLowerCase());
+    });
+    
+    if (isChecked) {
+      handleCheckboxOn(foundMovies);
+    } else {
+      handleCheckboxOff(foundMovies);
+    }
+  }
 
   return (
     <main className="movies">

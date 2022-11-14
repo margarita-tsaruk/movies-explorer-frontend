@@ -4,14 +4,13 @@ import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard.js';
 
 function MoviesCardList( { filteredMovies, onSaveMovies, savedMovies, onMovieDelete } ) {
+  const { pathname } = useLocation();
   const [ addedMovies, setAddedMovies ] = useState([]);
   const [ isButtonMoreOn, setIsButtonMoreOn ] = useState(false);
   const [ countMovies, setCountMovies ] = useState(0);
-  const [ renderedMovies, setRenderedMovies ] = useState(0);
+  const [ renderedMovies, setRenderedMovies ] = useState(1);
   const [ windowWidth, setWindowWidth ] = useState('');
  
-  const { pathname } = useLocation();
-  
   const cardsElements = addedMovies.map((card) => (
     <MoviesCard 
       key={ card.id || card._id}  
@@ -25,6 +24,9 @@ function MoviesCardList( { filteredMovies, onSaveMovies, savedMovies, onMovieDel
   function handleResizeMovies() {
     if (windowWidth >= 1200) {
       setRenderedMovies(12)
+      setCountMovies(4);
+    } else if (windowWidth < 1200 && windowWidth >= 900) {
+      setRenderedMovies(9)
       setCountMovies(3);
     } else if (windowWidth < 900 && windowWidth >= 720) {
       setRenderedMovies(8)
