@@ -29,16 +29,18 @@ function SavedMovies( { savedMovies, onSaveMovies, onMovieDelete } ) {
       setSearchedSavedMovies(shortMovies);
     } else {
       setError('Ничего не найдено');
-      setSearchedSavedMovies(null);
+      setSearchedSavedMovies([]);
     }
   }
 
   function handleCheckboxOff(foundMovies) {
+    console.log(foundMovies.length)
     if (foundMovies.length) {
       setSearchedSavedMovies(foundMovies);
     } else {
+      console.log(foundMovies.length)
       setError('Ничего не найдено');
-      setSearchedSavedMovies(null);
+      setSearchedSavedMovies([]);
     }
   }
   
@@ -47,7 +49,7 @@ function SavedMovies( { savedMovies, onSaveMovies, onMovieDelete } ) {
       return data.nameRU.toLowerCase().includes(inputValueSearch.toLowerCase());
     });
     
-    if (isChecked) {
+    if (!isChecked) {
       handleCheckboxOn(foundMovies);
     } else {
       handleCheckboxOff(foundMovies);
@@ -61,7 +63,7 @@ function SavedMovies( { savedMovies, onSaveMovies, onMovieDelete } ) {
         onCheckbox={ handleCheck }
         isChecked={ isChecked }
       />
-      { searchedSavedMovies 
+      { searchedSavedMovies.length 
       ? (
           <MoviesCardList 
             savedMovies={ searchedSavedMovies }
