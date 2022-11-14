@@ -2,7 +2,7 @@ import { useForm } from '../../hooks/useForm';
 import { Link } from 'react-router-dom';
 import Form from '../Form/Form';
 import logo from '../../images/logo.svg';
-import { regularExpressionEmail } from '../../utils/regularExpression';
+import { regularExpressionEmail } from '../../utils/regularExpressions';
 
 function Login( { onSignedUp } ) {
   const { values, handleChange, errors, isValid, resetErrors } = useForm({});

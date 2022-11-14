@@ -34,11 +34,9 @@ function SavedMovies( { savedMovies, onSaveMovies, onMovieDelete } ) {
   }
 
   function handleCheckboxOff(foundMovies) {
-    console.log(foundMovies.length)
     if (foundMovies.length) {
       setSearchedSavedMovies(foundMovies);
     } else {
-      console.log(foundMovies.length)
       setError('Ничего не найдено');
       setSearchedSavedMovies([]);
     }

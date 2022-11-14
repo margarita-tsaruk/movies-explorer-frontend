@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './Register.css';
 import Form from '../Form/Form';
 import logo from '../../images/logo.svg';
-import { regularExpressionName, regularExpressionEmail } from '../../utils/regularExpression';
+import { regularExpressionName, regularExpressionEmail } from '../../utils/regularExpressions';
 
 function Register( { onSignedUp } ) {
   const { values, handleChange, errors, isValid, resetErrors } = useForm({});

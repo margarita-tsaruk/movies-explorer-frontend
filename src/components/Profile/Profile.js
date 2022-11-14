@@ -2,7 +2,7 @@ import { useForm } from '../../hooks/useForm';
 import { useContext, useState, useEffect } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import './Profile.css';
-import { regularExpressionEmail } from '../../utils/regularExpression';
+import { regularExpressionEmail } from '../../utils/regularExpressions';
 
 function Profile( { isLoggedIn, onUpdateUserData, onSignOut } ) {
   const currentUser = useContext(CurrentUserContext);

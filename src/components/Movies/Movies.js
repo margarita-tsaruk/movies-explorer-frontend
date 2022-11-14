@@ -65,9 +65,7 @@ function Movies( { isLoading, setIsLoading, savedMovies, onSaveMovies } ) {
       const foundMovies = movies.filter(data => {
         return data.nameRU.toLowerCase().includes(inputValueSearch.toLowerCase());
       });
-
-      console.log(foundMovies)
-
+      
       if (foundMovies.length) {
         localStorage.setItem('searchedMovies', JSON.stringify(foundMovies));
         setSearchedMovies(foundMovies);
