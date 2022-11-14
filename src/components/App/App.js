@@ -25,7 +25,6 @@ function App() {
   const [ isMenuOpen, setIsMenuOpen ] = useState(false);
   const [ currentUser, setCurrentUser ] = useState({});
   const [ isLoading, setIsLoading ] = useState(false);
-  //const [ movieCards, setMovieCards ] = useState([]);
   const [ savedMovies, setSavedMovies ] = useState([]);
   const [ isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen ] = useState(false);
   const [ popupTitle, setPopupTitle ] = useState('');
@@ -210,14 +209,14 @@ function App() {
           <Route exact path="/">
             <Main isLoggedIn={ isLoggedIn } />
           </Route>
-          <Route path="/signup">
+          <Route exact path="/signup">
           { isLoggedIn 
             ? <Redirect to="/" />
             : <Register 
                 onSignedUp={ handleRegistration } />
             }
           </Route>
-          <Route path="/signin">
+          <Route exact path="/signin">
             { isLoggedIn 
             ? <Redirect to="/" />
             : <Login 
@@ -228,7 +227,6 @@ function App() {
             path="/movies"
             isLoggedIn={ isLoggedIn }
             component={ Movies } 
-            //movieCards={ movieCards }
             isLoading={ isLoading }
             setIsLoading={ setIsLoading }
             savedMovies={ savedMovies }
