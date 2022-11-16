@@ -5,7 +5,7 @@ import './SearchForm.css';
 function SearchForm( { onSearchMovies, onCheckbox, isChecked, input, errоr } ) {
   const { values, isValid, handleChange, setValues } = useForm({});
   const checkButtonClassName = (
-    `search__form__checkbox ${ !isChecked ? "search__form__checkbox_on" : "search__form__checkbox_off" }`
+    `search__form__checkbox ${ isChecked ? "search__form__checkbox_on" : "search__form__checkbox_off" }`
   );
 
   useEffect(() => {

@@ -12,13 +12,12 @@ function Profile( { isLoggedIn, onUpdateUserData, onSignOut } ) {
   useEffect(() => {
     if(isLoggedIn) {
       resetErrors();
-      setValues({ name: currentUser.name, email: currentUser.email });
+      setValues( { name: currentUser.name, email: currentUser.email } );
     }
   }, [currentUser, isLoggedIn]);
 
   function handleCheckData() {
     const isSameData = currentUser.name === values.name && currentUser.email === values.email;
-    console.log(isSameData);
     return isSameData;
   }
 
@@ -82,7 +81,7 @@ function Profile( { isLoggedIn, onUpdateUserData, onSignOut } ) {
           ) : (
             <button 
               type="submit" 
-              className={`profile__save-button ${ isValid && "profile__save-button_active"}`} 
+              className={`profile__save-button ${ !isValid || handleCheckData() ? "profile__save-button" : "profile__save-button_active" }`} 
               onClick={ handleSubmit }
               disabled={ !isValid || handleCheckData()}
             >

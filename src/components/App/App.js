@@ -15,7 +15,6 @@ import InfoTooltip from '../InfoToolTip/InfoTooltip';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import moviesApi from '../../utils/MoviesApi';
 import mainApi from '../../utils/MainApi';
-
 import './App.css';
 
 function App() {
@@ -28,6 +27,7 @@ function App() {
   const [ savedMovies, setSavedMovies ] = useState([]);
   const [ isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen ] = useState(false);
   const [ popupTitle, setPopupTitle ] = useState('');
+  const [ isInputDisabled, setIsInputDisabled ] = useState(false);
   
   function handleInfoTooltip() {
     setIsInfoTooltipPopupOpen(true);
@@ -39,9 +39,13 @@ function App() {
       setCurrentUser(userData);
       setSavedMovies(moviesData);
     })
-      .catch((err) => {
-        console.log(err);
-      })
+    .catch((err) => {
+      console.log(err);
+      localStorage.clear();
+      setIsLoggedIn(false);
+      setIsInputDisabled(false);
+      history.push('/');
+    })
   } 
 
   useEffect(() => {
@@ -76,6 +80,7 @@ function App() {
     .catch((err) => {
       console.log(err);
       setIsLoggedIn(false);
+      setIsInputDisabled(false);
       handleInfoTooltip();
       setPopupTitle('Что-то пошло не так, попробуйте еще раз!');
     })
@@ -91,6 +96,7 @@ function App() {
     .catch((err) => {
       console.log(err);
       setIsLoggedIn(false);
+      setIsInputDisabled(false);
       handleInfoTooltip();
       setPopupTitle('Что-то пошло не так, попробуйте ещё раз!');
     })
@@ -165,6 +171,7 @@ function App() {
     mainApi.signOut()
     .then((res) => {
       setIsLoggedIn(false);
+      setIsInputDisabled(false);
       setCurrentUser({});
       localStorage.removeItem('movies');
       localStorage.removeItem('loggedIn');
@@ -197,14 +204,20 @@ function App() {
           { isLoggedIn 
             ? <Redirect to="/" />
             : <Register 
-                onSignedUp={ handleRegistration } />
+                onSignedUp={ handleRegistration } 
+                isInputDisabled={ isInputDisabled }
+                setIsInputDisabled={ setIsInputDisabled }
+              />
             }
           </Route>
           <Route exact path="/signin">
             { isLoggedIn 
             ? <Redirect to="/" />
             : <Login 
-                onSignedUp={ handleAuthorization } />
+                onSignedUp={ handleAuthorization }
+                isInputDisabled={ isInputDisabled }
+                setIsInputDisabled={ setIsInputDisabled }
+              />
             }
           </Route>
           <ProtectedRoute 

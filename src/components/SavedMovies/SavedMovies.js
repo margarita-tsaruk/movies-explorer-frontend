@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import SearchForm from '../SearchForm/SearchForm.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import { ShortMovieDuration } from '../../utils/config'
 
 function SavedMovies( { savedMovies, onSaveMovies, onMovieDelete } ) {
   const [ searchedSavedMovies, setSearchedSavedMovies ] = useState([]);
@@ -8,12 +9,12 @@ function SavedMovies( { savedMovies, onSaveMovies, onMovieDelete } ) {
   const [ isChecked, setIsChecked ] = useState(false);
 
   useEffect(() => {
-    setIsChecked(!isChecked);
+    setIsChecked(false);
     setSearchedSavedMovies(savedMovies);
   }, [savedMovies]);
 
   useEffect(() => {
-    !isChecked ? handleCheckboxOn(searchedSavedMovies) :setSearchedSavedMovies(savedMovies);
+    isChecked ? handleCheckboxOn(searchedSavedMovies) :setSearchedSavedMovies(savedMovies);
   }, [isChecked]);
 
   function handleCheck() {
@@ -22,7 +23,7 @@ function SavedMovies( { savedMovies, onSaveMovies, onMovieDelete } ) {
 
   function handleCheckboxOn(foundMovies) {
     const shortMovies = foundMovies.filter(data => {
-      return data.duration <= 40
+      return data.duration <= ShortMovieDuration
     });
 
     if (foundMovies.length) {
@@ -37,17 +38,17 @@ function SavedMovies( { savedMovies, onSaveMovies, onMovieDelete } ) {
     if (foundMovies.length) {
       setSearchedSavedMovies(foundMovies);
     } else {
-      setError('Ничего не найдено');
       setSearchedSavedMovies([]);
+      setError('Ничего не найдено');
     }
   }
   
   function handleSearchMovies(inputValueSearch) {
-    const foundMovies = searchedSavedMovies.filter(data => {
+    const foundMovies = savedMovies.filter(data => {
       return data.nameRU.toLowerCase().includes(inputValueSearch.toLowerCase());
     });
-    
-    if (!isChecked) {
+ 
+    if (isChecked) {
       handleCheckboxOn(foundMovies);
     } else {
       handleCheckboxOff(foundMovies);

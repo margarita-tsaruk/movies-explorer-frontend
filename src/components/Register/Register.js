@@ -5,9 +5,9 @@ import Form from '../Form/Form';
 import logo from '../../images/logo.svg';
 import { regularExpressionName, regularExpressionEmail } from '../../utils/regularExpressions';
 
-function Register( { onSignedUp } ) {
-  const { values, handleChange, errors, isValid, resetErrors } = useForm({});
-
+function Register( { onSignedUp, isInputDisabled, setIsInputDisabled } ) {
+  const { values, handleChange, errors, isValid } = useForm({});
+  
   const link = (
     <p className="form__paragraph">
       Уже зарегистрированы?
@@ -24,7 +24,7 @@ function Register( { onSignedUp } ) {
   function handleSubmit(event) {
     event.preventDefault();
     onSignedUp( {...values} );
-    resetErrors();
+    setIsInputDisabled(true);
   }
 
   return (
@@ -53,6 +53,7 @@ function Register( { onSignedUp } ) {
             maxLength="40"
             pattern={ regularExpressionName }
             required
+            disabled={ isInputDisabled }
             value={ values.name || '' }
             onChange={ handleChange } />
           <span className="form__error form__error_top" id="input-email-error">
@@ -69,6 +70,7 @@ function Register( { onSignedUp } ) {
             minLength="2"
             maxLength="40"
             required
+            disabled={ isInputDisabled }
             value={ values.email || '' }
             onChange={ handleChange } />
           <span className="form__error form__error_middle" id="input-email-error">
@@ -84,6 +86,7 @@ function Register( { onSignedUp } ) {
             minLength="2"
             maxLength="40"
             required
+            disabled={ isInputDisabled }
             value={ values.password || '' }
             onChange={ handleChange } />
           <span className="form__error form__error_bottom" id="input-password-error">

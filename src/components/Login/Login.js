@@ -4,8 +4,8 @@ import Form from '../Form/Form';
 import logo from '../../images/logo.svg';
 import { regularExpressionEmail } from '../../utils/regularExpressions';
 
-function Login( { onSignedUp } ) {
-  const { values, handleChange, errors, isValid, resetErrors } = useForm({});
+function Login( { onSignedUp, isInputDisabled, setIsInputDisabled } ) {
+  const { values, handleChange, errors, isValid } = useForm({});
 
   const link = (
     <p className="form__paragraph">
@@ -23,9 +23,9 @@ function Login( { onSignedUp } ) {
   function handleSubmit(event) {
     event.preventDefault();
     onSignedUp( {...values} );
-    resetErrors();
+    setIsInputDisabled(true);
   }
-
+  
   return (
     <main className="auth">
       <Link to="/">
@@ -51,6 +51,7 @@ function Login( { onSignedUp } ) {
             minLength="2"
             maxLength="40"
             required
+            disabled={ isInputDisabled }
             pattern={ regularExpressionEmail }
             value={ values.email || '' }
             onChange={ handleChange } />
@@ -67,6 +68,7 @@ function Login( { onSignedUp } ) {
             minLength="2"
             maxLength="40"
             required
+            disabled={ isInputDisabled }
             value={ values.password || '' }
             onChange={ handleChange } />
           <span className="form__error form__error_login-bottom" id="input-password-error">

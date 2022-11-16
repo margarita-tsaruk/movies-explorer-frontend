@@ -3,13 +3,14 @@ import './Movies.css';
 import SearchForm from '../SearchForm/SearchForm.js';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
+import { ShortMovieDuration } from '../../utils/config'
 
 function Movies( { isLoading, setIsLoading, savedMovies, onSaveMovies } ) {
   const [ isChecked, setIsChecked ] = useState(false);
   const [ filteredMovies, setFilteredMovies ] = useState(null);
   const [ searchedMovies, setSearchedMovies ] = useState([]);
   const [ input, setInput ] = useState('');
-  const [ error, setError ] = useState('Введите название фильма в поиск');
+  const [ error, setError ] = useState('');
   
   useEffect(() => {  
     const searchedMovies = localStorage.getItem('searchedMovies');
@@ -19,7 +20,7 @@ function Movies( { isLoading, setIsLoading, savedMovies, onSaveMovies } ) {
     }
 
     const checkbox = localStorage.getItem('checkbox');
-    if (checkbox) {
+    if (checkbox === 'true') {
       setIsChecked(true);
     }
 
@@ -35,7 +36,7 @@ function Movies( { isLoading, setIsLoading, savedMovies, onSaveMovies } ) {
 
   function handleCheckboxOn(foundMovies, isChecked) {
     const shortMovies = foundMovies.filter(data => {
-      return data.duration <= 40
+      return data.duration <= ShortMovieDuration
     });
 
     if (foundMovies.length) {
@@ -65,14 +66,14 @@ function Movies( { isLoading, setIsLoading, savedMovies, onSaveMovies } ) {
       const foundMovies = movies.filter(data => {
         return data.nameRU.toLowerCase().includes(inputValueSearch.toLowerCase());
       });
-      
+
       if (foundMovies.length) {
         localStorage.setItem('searchedMovies', JSON.stringify(foundMovies));
         setSearchedMovies(foundMovies);
         localStorage.setItem('inputSearch', inputValueSearch);
       } 
 
-      if (!isChecked) {
+      if (isChecked) {
         handleCheckboxOn(foundMovies, inputValueSearch, isChecked); 
       } else {
         handleCheckboxOff(foundMovies, inputValueSearch, isChecked);
@@ -86,16 +87,21 @@ function Movies( { isLoading, setIsLoading, savedMovies, onSaveMovies } ) {
   }
 
   function handleFilterShortMovies(searchedMovies, isChecked) {
-    if (!isChecked) {
+    if (isChecked) {
       const shortMovies = searchedMovies.filter(data => {
-        return data.duration <= 40
+        return data.duration <= ShortMovieDuration
       });
-      
-      setFilteredMovies(shortMovies);
-      localStorage.setItem('checkbox', isChecked);
+
+      if (searchedMovies.length) {
+        setFilteredMovies(shortMovies);
+        localStorage.setItem('checkbox', isChecked);
+      } else {
+        console.log('works')
+        setError('Ничего не найдено');
+      } 
     } else {
       const longMovies = searchedMovies.filter(data => {
-        return data.duration > 40
+        return data.duration > ShortMovieDuration
       });
 
       setFilteredMovies(longMovies);

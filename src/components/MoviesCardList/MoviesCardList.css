@@ -6,7 +6,8 @@
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(348px, 354px));
+  justify-content: center;
   column-gap: 24px;
   row-gap: 30px;
   padding: 70px 0 30px;
@@ -46,7 +47,7 @@
 
 @media all and (min-width: 720px) and (max-width: 1024px) {
   .movies-cards__container {
-    grid-template-columns: repeat(auto-fit, minmax(305px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(305px, 329px));
     column-gap: 30px;
     row-gap: 36px;
   }
@@ -55,7 +56,6 @@
 @media all and (max-width: 719px) {
   .movies-cards__container {
     grid-template-columns: repeat(auto-fit, minmax(282px, 300px));
-    justify-content: center;
     padding-top: 40px;
     gap: 16px;
   }
