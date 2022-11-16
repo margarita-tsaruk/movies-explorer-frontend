@@ -38,7 +38,7 @@ function Movies( { isLoading, setIsLoading, savedMovies, onSaveMovies } ) {
     const shortMovies = foundMovies.filter(data => {
       return data.duration <= ShortMovieDuration
     });
-
+    console.log(foundMovies)
     if (foundMovies.length) {
       setFilteredMovies(shortMovies);
       localStorage.setItem('checkbox', isChecked);
@@ -66,13 +66,11 @@ function Movies( { isLoading, setIsLoading, savedMovies, onSaveMovies } ) {
       const foundMovies = movies.filter(data => {
         return data.nameRU.toLowerCase().includes(inputValueSearch.toLowerCase());
       });
-
-      if (foundMovies.length) {
-        localStorage.setItem('searchedMovies', JSON.stringify(foundMovies));
-        setSearchedMovies(foundMovies);
-        localStorage.setItem('inputSearch', inputValueSearch);
-      } 
-
+ 
+      localStorage.setItem('searchedMovies', JSON.stringify(foundMovies));
+      setSearchedMovies(foundMovies);
+      localStorage.setItem('inputSearch', inputValueSearch);
+  
       if (isChecked) {
         handleCheckboxOn(foundMovies, inputValueSearch, isChecked); 
       } else {
@@ -96,7 +94,6 @@ function Movies( { isLoading, setIsLoading, savedMovies, onSaveMovies } ) {
         setFilteredMovies(shortMovies);
         localStorage.setItem('checkbox', isChecked);
       } else {
-        console.log('works')
         setError('Ничего не найдено');
       } 
     } else {

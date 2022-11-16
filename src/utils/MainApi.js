@@ -134,7 +134,7 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-  url: 'https://api.movies-explorer.m-ts.nomoredomains.icu',
+  url: 'http://localhost:4000',
   headers: {
     'Content-Type': 'application/json'
   }
