@@ -1,8 +1,7 @@
 import { Switch, Route, Link } from 'react-router-dom';
 import './NavTab.css';
 
-function NavTab( ) {
-
+function NavTab() {
   return (
     <Switch>
       <Route path="/">

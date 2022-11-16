@@ -2,6 +2,20 @@
   padding: 0 70px;
 }
 
+.movies__error__container {
+  margin: 55px 0;
+}
+
+.movies__error__text {
+  color: #000;
+  margin: 0 auto;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 20px;
+  text-align: center;
+  padding: 10px 0;
+}
+
 @media all and (min-width: 720px) and (max-width: 1024px) {
   .movies {
     padding: 70px 30px 0;

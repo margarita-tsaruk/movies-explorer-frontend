@@ -1,11 +1,11 @@
 import { useForm } from '../../hooks/useForm';
 import { Link } from 'react-router-dom';
-import './Login.css';
 import Form from '../Form/Form';
 import logo from '../../images/logo.svg';
+import { regularExpressionEmail } from '../../utils/regularExpressions';
 
-function Login( { onSignedUp } ) {
-  const { values, handleChange, errors, isValid, resetErrors } = useForm({});
+function Login( { onSignedUp, isInputDisabled, setIsInputDisabled } ) {
+  const { values, handleChange, errors, isValid } = useForm({});
 
   const link = (
     <p className="form__paragraph">
@@ -14,19 +14,18 @@ function Login( { onSignedUp } ) {
     </p>
   );
   
-  const buttonClass = {
-    buttonActive: "form__button form__button_login",
-    buttonDisabled: "form__button_disabled"
-  }
+  const classNames = {
+    title: "form__title",
+    button: "form__button form__button_login",
+    buttonActive: "form__button_active",
+  };
 
   function handleSubmit(event) {
     event.preventDefault();
-        
     onSignedUp( {...values} );
-
-    resetErrors();
+    setIsInputDisabled(true);
   }
-
+  
   return (
     <main className="auth">
       <Link to="/">
@@ -36,9 +35,9 @@ function Login( { onSignedUp } ) {
         name="login"
         title="Рады видеть!"
         buttonText="Войти"
-        buttonClass={ buttonClass }
+        classNames={ classNames }
         onSubmit={ handleSubmit }
-        isDisabled={ isValid }
+        isValid={ isValid }
         link={ link }
       >
         <fieldset className="form__fieldset">
@@ -52,6 +51,8 @@ function Login( { onSignedUp } ) {
             minLength="2"
             maxLength="40"
             required
+            disabled={ isInputDisabled }
+            pattern={ regularExpressionEmail }
             value={ values.email || '' }
             onChange={ handleChange } />
           <span className="form__error form__error_top" id="input-email-error">
@@ -67,6 +68,7 @@ function Login( { onSignedUp } ) {
             minLength="2"
             maxLength="40"
             required
+            disabled={ isInputDisabled }
             value={ values.password || '' }
             onChange={ handleChange } />
           <span className="form__error form__error_login-bottom" id="input-password-error">

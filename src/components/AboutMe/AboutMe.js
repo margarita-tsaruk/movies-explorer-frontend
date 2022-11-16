@@ -2,7 +2,7 @@ import './AboutMe.css';
 import Heading from '../Heading/Heading';
 import studentImage from '../../images/studentImage.jpg';
 
-function AboutMe(  ) {
+function AboutMe() {
 
   return (
     <section className="about-me">

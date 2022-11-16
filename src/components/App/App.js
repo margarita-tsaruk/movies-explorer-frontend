@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Route, Switch, useLocation, useHistory} from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Route, Switch, useLocation, useHistory, Redirect } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -11,43 +11,182 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import Menu from '../Menu/Menu';
-// import api from '../../utils/api';
-import { movieCards } from '../../utils/movieCards';
-
+import InfoTooltip from '../InfoToolTip/InfoTooltip';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import moviesApi from '../../utils/MoviesApi';
+import mainApi from '../../utils/MainApi';
 import './App.css';
 
 function App() {
-  const { pathname } = useLocation();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const history = useHistory();
-  const [currentUser, setCurrentUser] = useState({});
-  // const [movieCards, setMovieCards] = useState([]);
+  const { pathname } = useLocation();
+  const [ isLoggedIn, setIsLoggedIn ] = useState(JSON.parse(localStorage.getItem('loggedIn'))); 
+  const [ isMenuOpen, setIsMenuOpen ] = useState(false);
+  const [ currentUser, setCurrentUser ] = useState({});
+  const [ isLoading, setIsLoading ] = useState(false);
+  const [ savedMovies, setSavedMovies ] = useState([]);
+  const [ isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen ] = useState(false);
+  const [ popupTitle, setPopupTitle ] = useState('');
+  const [ isInputDisabled, setIsInputDisabled ] = useState(false);
   
-  function handleAuthorization() {
-    console.log(isLoggedIn);
-    setIsLoggedIn(!isLoggedIn);
-    history.push('/movies');
+  function handleInfoTooltip() {
+    setIsInfoTooltipPopupOpen(true);
+  }
+
+  function handleCheckToken() {
+    mainApi.getData()
+    .then(([userData, moviesData]) => {
+      setCurrentUser(userData);
+      setSavedMovies(moviesData);
+    })
+    .catch((err) => {
+      console.log(err);
+      localStorage.clear();
+      setIsLoggedIn(false);
+      setIsInputDisabled(false);
+      history.push('/');
+    })
+  } 
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      handleCheckToken();
+    }
+  }, []);
+
+  function handleGetMovies() {
+    moviesApi.getMovies()
+      .then((movies) => {
+        localStorage.setItem('movies', JSON.stringify(movies));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function handleAuthorization(userData) {
+    mainApi.authorize(userData)
+    .then((userData) => {
+      if (userData) {
+        localStorage.setItem('loggedIn', true);
+        handleCheckToken();
+        handleGetMovies();
+        setIsLoggedIn(true);
+        history.push('/movies');
+        handleInfoTooltip();
+        setPopupTitle('Вы успешно вошли в приложение!');
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      setIsLoggedIn(false);
+      setIsInputDisabled(false);
+      handleInfoTooltip();
+      setPopupTitle('Что-то пошло не так, попробуйте еще раз!');
+    })
+  }
+
+  function handleRegistration(userData) {
+    mainApi.register(userData)
+    .then((newUserData) => {
+      if (newUserData) {
+        handleAuthorization(userData);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      setIsLoggedIn(false);
+      setIsInputDisabled(false);
+      handleInfoTooltip();
+      setPopupTitle('Что-то пошло не так, попробуйте ещё раз!');
+    })
+  }
+
+  function handleUpdateUserInfo(userData) {
+    mainApi.updateUserInfo(userData.name, userData.email)
+    .then((newUser) => {
+      setCurrentUser(prevState => {
+        return {
+          ...prevState,
+          name: newUser.name,
+          email: newUser.email,
+        }
+      })
+      handleInfoTooltip();
+      setPopupTitle('Профайл успешно обновлен');
+    })
+    .catch((err) => {
+      console.log(err);
+      handleInfoTooltip();
+      setPopupTitle('Ошибка обновления профиля! Введите имя или email в правильном формате!');
+    })
+    .finally(() => {
+      setIsLoading(false);
+    });
   }
 
   function handleMenuOpen() {
     setIsMenuOpen(!isMenuOpen);
   }
 
-  // useEffect(() => {
-  //   if(isLoggedIn) {
-  //     api.MovieCards()
-  //       .then((cardsData) => {
-  //         setMovieCards(cardsData);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       })
-  //   }
-  // }, [isLoggedIn])
+  function closePopup() {
+    setIsInfoTooltipPopupOpen(false);
+  }
+
+  function handleGetSavedMovies() {
+    mainApi.getSavedMovies()
+    .then((receivedMovies) => {
+      setSavedMovies(receivedMovies);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+
+  function handleChangeMovieStatus(movie) {
+    const isSaved = savedMovies.some(i => i.movieId === movie.id);
+    mainApi.changeMovieStatus(movie, isSaved) 
+      .then((newMovie) => {
+        handleGetSavedMovies()
+        setSavedMovies(savedMovies.map((savedMovie) => 
+          savedMovie.movieId === movie.id ? newMovie : savedMovie));
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
+  function handleMovieDelete(movie) {
+    mainApi.deleteSavedMovie(movie)
+    .then(() => {
+      handleGetSavedMovies()
+      setSavedMovies((state) => state.filter((movie) => movie.movieId !== movie.id));
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
+  function handleSignOut() {
+    mainApi.signOut()
+    .then((res) => {
+      setIsLoggedIn(false);
+      setIsInputDisabled(false);
+      setCurrentUser({});
+      localStorage.removeItem('movies');
+      localStorage.removeItem('loggedIn');
+      localStorage.removeItem('searchedMovies');
+      localStorage.removeItem('inputSearch');
+      localStorage.removeItem('checkbox');
+      history.push('/');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
 
   return (
-    <CurrentUserContext.Provider value={currentUser}>
+    <CurrentUserContext.Provider value={ currentUser }>
       <div className="page">
         { pathname === "/" || pathname === "/movies" || pathname === "/saved-movies" || pathname === "/profile"
             ? (
@@ -59,29 +198,52 @@ function App() {
         <Menu isMenuOpen={ isMenuOpen } onChangeMenu={ handleMenuOpen } />
         <Switch>
           <Route exact path="/">
-            <Main isLoggedIn={isLoggedIn} />
+            <Main isLoggedIn={ isLoggedIn } />
           </Route>
-          <Route path="/movies">
-            <Movies 
-              movieCards={ movieCards }
-            />
+          <Route exact path="/signup">
+          { isLoggedIn 
+            ? <Redirect to="/" />
+            : <Register 
+                onSignedUp={ handleRegistration } 
+                isInputDisabled={ isInputDisabled }
+                setIsInputDisabled={ setIsInputDisabled }
+              />
+            }
           </Route>
-          <Route path="/saved-movies">
-            <SavedMovies 
-              movieCards={ movieCards }
-            />
+          <Route exact path="/signin">
+            { isLoggedIn 
+            ? <Redirect to="/" />
+            : <Login 
+                onSignedUp={ handleAuthorization }
+                isInputDisabled={ isInputDisabled }
+                setIsInputDisabled={ setIsInputDisabled }
+              />
+            }
           </Route>
-          <Route path="/profile">
-            <Profile />
-          </Route>
-          <Route path="/signup">
-            <Register 
-            onSignedUp={ handleAuthorization } />
-          </Route>
-          <Route path="/signin">
-            <Login 
-            onSignedUp={ handleAuthorization } />
-          </Route>
+          <ProtectedRoute 
+            path="/movies"
+            isLoggedIn={ isLoggedIn }
+            component={ Movies } 
+            isLoading={ isLoading }
+            setIsLoading={ setIsLoading }
+            savedMovies={ savedMovies }
+            onSaveMovies={ handleChangeMovieStatus }
+          />
+          <ProtectedRoute 
+            path="/saved-movies"
+            isLoggedIn={ isLoggedIn }
+            component={ SavedMovies } 
+            savedMovies={ savedMovies }
+            onSaveMovies={ handleChangeMovieStatus }
+            onMovieDelete={ handleMovieDelete }
+          />
+          <ProtectedRoute 
+            path="/profile"
+            isLoggedIn={ isLoggedIn }
+            component={ Profile } 
+            onUpdateUserData={ handleUpdateUserInfo }
+            onSignOut={ handleSignOut }
+          />
           <Route path="*">
             <PageNotFound />
           </Route>
@@ -93,6 +255,12 @@ function App() {
             " "
           )
         }
+        <InfoTooltip
+          isPopupOpened={ isInfoTooltipPopupOpen }
+          popupTitle={popupTitle}
+          onClose={ closePopup }
+          isLoggedIn={ isLoggedIn }
+        />
       </div>
       </CurrentUserContext.Provider>
   );

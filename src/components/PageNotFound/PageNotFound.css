@@ -25,7 +25,7 @@
   margin: 0;
 }
 
-.page-notfound__link {
+.page-notfound__button {
   text-decoration: none;
   font-weight: 400;
   font-size: 14px;
@@ -33,6 +33,16 @@
   text-align: center;
   color: #2BE080;
   margin: 184px 0 0;
+  border: 0;
+  background-color: #fff;
+  cursor: pointer;
+  transition-property: opacity;
+  transition-duration: .2s;
+  transition-timing-function: linear;
+}
+
+.page-notfound__button:hover {
+  opacity: .7;
 }
 
 @media all and (min-width: 1025px) {

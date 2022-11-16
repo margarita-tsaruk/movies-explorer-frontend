@@ -2,7 +2,6 @@ import './Techs.css';
 import Heading from '../Heading/Heading'
 
 function Techs() {
-
   return (
    <section className="techs">
       <Heading heading={ "Технологии" } />  

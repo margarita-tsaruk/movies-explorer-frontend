@@ -1,7 +1,7 @@
 import './AboutProject.css';
 import Heading from '../Heading/Heading';
 
-function AboutProject(  ) {
+function AboutProject() {
 
   return (
    <section className="about-project" id="about-project">
